@@ -5,11 +5,13 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { ArticleCard } from "@/components/articles/article-card"
+import { Breadcrumbs } from "@/components/articles/breadcrumbs"
 import { LatestArticles } from "@/components/articles/latest-articles"
 import { ShareButtons } from "@/components/articles/share-buttons"
 import { FacebookPageEmbed } from "@/components/social/facebook-page-embed"
 import { getArticleEntryStaticParams } from "@/lib/article-static-params"
 import { getCategoryTitle, isCategory } from "@/lib/articles"
+import { brand } from "@/lib/brand"
 import {
   getArticleByCategoryAndSlug,
   getArticlesByCategory,
@@ -17,6 +19,7 @@ import {
   getSiteMetadata,
 } from "@/lib/contentful"
 import { buildMetadata } from "@/lib/metadata"
+import { formatDate } from "@/lib/format"
 import type { ContentfulImage } from "@/lib/types"
 
 export const dynamic = "force-static"
@@ -50,6 +53,7 @@ export async function generateMetadata({
     return buildMetadata({
       title: `${getCategoryTitle(category)} - صفحة ${entry}`,
       keywords: ["المقالات", category, entry],
+      path: `/articles/${category}/${entry}`,
     })
   }
 
@@ -63,6 +67,8 @@ export async function generateMetadata({
     title: post.title,
     description: post.description,
     keywords: [category, post.title],
+    type: "article",
+    path: `/articles/${category}/${post.slug}`,
     image: post.heroImage
       ? {
           src: post.heroImage.url,
@@ -97,8 +103,8 @@ function CategoryPagination({
             href={href}
             className={`inline-flex size-11 items-center justify-center rounded-full border text-sm font-semibold transition ${
               pageNumber === currentPage
-                ? "border-[#7e275c] bg-[#7e275c] text-white"
-                : "border-[#ead9e2] bg-white text-slate-700 hover:border-[#7e275c]"
+                ? "border-[var(--accent)] bg-[var(--accent)] text-white"
+                : "border-[var(--border)] bg-white text-slate-700 hover:border-[var(--accent)]"
             }`}
           >
             {pageNumber}
@@ -119,7 +125,7 @@ function PostMedia({ images }: { images: ContentfulImage[] }) {
       {images.map((image: ContentfulImage) => (
         <div
           key={image.url}
-          className="relative aspect-[16/10] overflow-hidden rounded-4xl bg-[#f6ecef]"
+          className="relative aspect-[16/10] overflow-hidden rounded-4xl bg-[var(--surface-muted)]"
         >
           <Image
             src={image.url}
@@ -164,6 +170,15 @@ export default async function ArticleEntryPage({
     return (
       <div className="page-shell">
         <div className="section-heading" data-align="center">
+          <div className="flex justify-center">
+            <Breadcrumbs
+              items={[
+                { label: "الرئيسية", href: "/" },
+                { label: "المدونة", href: "/blog" },
+                { label: getCategoryTitle(category) },
+              ]}
+            />
+          </div>
           <p className="eyebrow">صفحات المقالات</p>
           <h1 className="section-title">{getCategoryTitle(category)}</h1>
         </div>
@@ -195,10 +210,19 @@ export default async function ArticleEntryPage({
   const shareUrl = `${site.siteUrl}/articles/${post.category}/${post.slug}`
 
   return (
-    <div className="page-shell grid lg:grid-cols-[1.35fr_0.65fr]">
+    <div className="page-shell page-shell--grid lg:grid-cols-[1.35fr_0.65fr]">
       <section className="surface-card p-6 lg:p-8">
         <div className={`space-y-6 ${isEnglish ? "text-left" : "text-right"}`}>
           <header className="space-y-3">
+            <div className="flex flex-wrap justify-center">
+              <Breadcrumbs
+                items={[
+                  { label: "الرئيسية", href: "/" },
+                  { label: "المدونة", href: "/blog" },
+                  { label: getCategoryTitle(category), href: `/articles/${category}` },
+                ]}
+              />
+            </div>
             <h1 className="text-4xl font-black text-slate-900">
               {post.title}
               {post.source ? (
@@ -208,15 +232,18 @@ export default async function ArticleEntryPage({
               ) : null}
             </h1>
             <p className="text-sm text-[var(--text-muted)]">
-              <span>by {post.authorName ?? "شغبطه"}</span>
+              <span>
+                  {isEnglish ? "by" : "بقلم"}{" "}
+                  {post.authorName ?? brand.name}
+                </span>
               {post.publishDate ? (
-                <span>{` / ${post.publishDate}`}</span>
+                <span>{` / ${formatDate(post.publishDate)}`}</span>
               ) : null}
             </p>
           </header>
 
           {post.heroImage ? (
-            <div className="relative aspect-video overflow-hidden rounded-4xl bg-[#f6ecef]">
+            <div className="relative aspect-video overflow-hidden rounded-4xl bg-[var(--surface-muted)]">
               <Image
                 src={post.heroImage.url}
                 alt={post.title}

@@ -9,6 +9,7 @@ import {
 } from "contentful"
 import kebabCase from "lodash/kebabCase"
 
+import { brand, siteDescription, siteTitle } from "@/lib/brand"
 import { getSiteUrl } from "@/lib/site-url"
 import {
   ARTICLE_CATEGORIES,
@@ -28,17 +29,11 @@ import {
 const DEFAULT_PAGE_SIZE = 6
 
 const siteMetadata: SiteMetadata = {
-  title: "شغبطة - بقلم د.هبة اللكاوي",
-  description:
-    "بقلم د. هبة اللكاوي طبيب أخصائي الطب النفسي وتعديل السلوك ، روائية وكاتبة ، معدة وحكاءة",
-  author: "هبه اللكاوي",
+  title: siteTitle,
+  description: siteDescription,
+  author: brand.name,
   siteUrl: getSiteUrl(),
-  defaultKeywords: [
-    "الصحه العامه",
-    "الصحه النفسيه",
-    "شغبطه بقلم د.هبه اللكاوي",
-    "shaghbatta",
-  ],
+  defaultKeywords: [...brand.keywords],
 }
 
 type ContentfulEntry<T extends EntrySkeletonType = EntrySkeletonType> = Entry<
@@ -51,15 +46,8 @@ type ContentfulClient = ContentfulClientApi<undefined>
 let client: ContentfulClient | null = null
 
 const fallbackAbout: AboutData = {
-  title: "شغبطه",
-  description:
-    "بقلم د. هبة اللكاوي طبيب أخصائي الطب النفسي وتعديل السلوك ، روائية وكاتبة ، معدة وحكاءة",
-  image: {
-    url: "/images/shaghbatta.jpg",
-    width: 1200,
-    height: 800,
-    title: "شغبطه",
-  },
+  title: brand.roleAr,
+  description: siteDescription,
   phone: ["01200000000"],
   mail: "hello@shaghbatta.com",
   facebook: "https://www.facebook.com/ShaghbattaPsychiatrist",
@@ -68,16 +56,16 @@ const fallbackAbout: AboutData = {
   askfm: "https://ask.fm/",
   whatsapp: ["201200000000"],
   soundCloudTrackHtml:
-    '<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1500000000&color=%237e275c"></iframe>',
+    '<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1500000000&color=%23277ee1"></iframe>',
   instagramFeed: "https://www.instagram.com/p/CWTc5o3IkTb/",
   services: [
     {
       id: "service-1",
       name: "الاستشارات النفسية",
       icon: {
-        url: "/images/shaghbatta-logo.png",
-        width: 80,
-        height: 80,
+        url: "/brand/logo-mark.png",
+        width: 512,
+        height: 512,
         title: "Service",
       },
     },
@@ -85,9 +73,9 @@ const fallbackAbout: AboutData = {
       id: "service-2",
       name: "ورش الكتابة",
       icon: {
-        url: "/images/shaghbatta-logo.png",
-        width: 80,
-        height: 80,
+        url: "/brand/logo-mark.png",
+        width: 512,
+        height: 512,
         title: "Service",
       },
     },
@@ -95,9 +83,9 @@ const fallbackAbout: AboutData = {
       id: "service-3",
       name: "برامج التوعية",
       icon: {
-        url: "/images/shaghbatta-logo.png",
-        width: 80,
-        height: 80,
+        url: "/brand/logo-mark.png",
+        width: 512,
+        height: 512,
         title: "Service",
       },
     },
@@ -105,9 +93,9 @@ const fallbackAbout: AboutData = {
       id: "service-4",
       name: "جلسات الحجز والمتابعة",
       icon: {
-        url: "/images/shaghbatta-logo.png",
-        width: 80,
-        height: 80,
+        url: "/brand/logo-mark.png",
+        width: 512,
+        height: 512,
         title: "Service",
       },
     },
@@ -124,15 +112,9 @@ const fallbackAuthor: AuthorData = {
   experience: ["بيانات الخبرات ستظهر عند ربط Contentful"],
   publications: ["بيانات الإصدارات ستظهر عند ربط Contentful"],
   shortBio:
-    "تم إنشاء نسخة ترحيل أولية للموقع. عند إضافة مفاتيح Contentful ستظهر بيانات المؤسس الأصلية بالكامل.",
+    "طبيبة طب نفسي وتعديل سلوك، وروائية وكاتبة. تكتب عن النفس والعلاقات والتربية، وتقدّم جلسات ومتابعة نصية، وورش كتابة.",
   shortBioHtml:
-    "<p>تم إنشاء نسخة ترحيل أولية للموقع. عند إضافة مفاتيح Contentful ستظهر بيانات المؤسس الأصلية بالكامل.</p>",
-  image: {
-    url: "/images/shaghbatta.jpg",
-    width: 1200,
-    height: 800,
-    title: "Heba Ellekawy",
-  },
+    "<p>طبيبة طب نفسي وتعديل سلوك، وروائية وكاتبة. تكتب عن النفس والعلاقات والتربية، وتقدّم جلسات ومتابعة نصية، وورش كتابة.</p>",
 }
 
 const fallbackArticles: BlogPost[] = [
@@ -142,7 +124,7 @@ const fallbackArticles: BlogPost[] = [
     slug: "migration-sample-article",
     category: "thoughts-and-tips",
     publishDate: "2026-07-23",
-    source: "شغبطه",
+    source: brand.name,
     description:
       "هذا محتوى تجريبي مؤقت يظهر فقط عند غياب مفاتيح Contentful في بيئة التطوير.",
     bodyHtml:
@@ -150,12 +132,6 @@ const fallbackArticles: BlogPost[] = [
     authorName: "د. هبة اللكاوي",
     instagram: null,
     featured: true,
-    heroImage: {
-      url: "/images/shaghbatta.jpg",
-      width: 1200,
-      height: 800,
-      title: "Sample article",
-    },
     shortStoryImages: [],
   },
 ]
@@ -170,9 +146,9 @@ const fallbackStories: Story[] = [
     pdfUrl: "#",
     pdfFileName: "story.pdf",
     heroImage: {
-      url: "/images/shaghbatta-logo.png",
-      width: 100,
-      height: 100,
+      url: "/brand/logo-mark.png",
+      width: 512,
+      height: 512,
       title: "Story",
     },
   },
@@ -190,9 +166,9 @@ const fallbackNovels: Novel[] = [
     pdfFileName: "novel.pdf",
     inShop: false,
     heroImage: {
-      url: "/images/shaghbatta.jpg",
-      width: 600,
-      height: 800,
+      url: "/brand/logo-stacked.png",
+      width: 700,
+      height: 1050,
       title: "Novel",
     },
   },

@@ -36,9 +36,9 @@ export default async function RootLayout({
     >
       <body className="min-h-full text-slate-900">
         <div className="relative isolate flex min-h-full flex-col overflow-x-clip">
-          <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[30rem] bg-[radial-gradient(circle_at_top,rgba(244,214,227,0.95),rgba(252,248,248,0)_68%)]" />
-          <div className="pointer-events-none absolute -left-24 top-[24rem] -z-10 h-72 w-72 rounded-full bg-[rgba(238,220,232,0.55)] blur-3xl" />
-          <div className="pointer-events-none absolute -right-20 top-[7rem] -z-10 h-80 w-80 rounded-full bg-[rgba(244,232,214,0.4)] blur-3xl" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[34rem] bg-[radial-gradient(circle_at_top,rgba(43,178,230,0.28),rgba(252,253,255,0)_70%)]" />
+          <div className="pointer-events-none absolute -left-24 top-[26rem] -z-10 h-72 w-72 rounded-full bg-[rgba(41,170,225,0.16)] blur-3xl" />
+          <div className="pointer-events-none absolute -right-20 top-[9rem] -z-10 h-80 w-80 rounded-full bg-[rgba(39,126,225,0.14)] blur-3xl" />
           <SiteShell about={about}>{children}</SiteShell>
         </div>
       </body>

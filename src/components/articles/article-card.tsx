@@ -1,12 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { getCategoryTitle } from "@/lib/articles";
+import { brand } from "@/lib/brand";
+import { formatDate } from "@/lib/format";
 import type { BlogPost } from "@/lib/types";
 
 export function ArticleCard({ article }: { article: BlogPost }) {
   return (
     <article className="surface-card flex h-full flex-col overflow-hidden transition hover:-translate-y-1">
-      <div className="relative aspect-[16/10] overflow-hidden bg-[#f6ecef]">
+      <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-muted)]">
         {article.heroImage ? (
           <Image
             src={article.heroImage.url}
@@ -18,7 +21,7 @@ export function ArticleCard({ article }: { article: BlogPost }) {
         ) : null}
         <div className="absolute inset-x-4 top-4 flex justify-between gap-3">
           <span className="pill-badge bg-white/88 px-3 py-2 text-xs">
-            {article.category === "english-articles" ? "English" : "مقال"}
+            {getCategoryTitle(article.category)}
           </span>
         </div>
       </div>
@@ -26,8 +29,11 @@ export function ArticleCard({ article }: { article: BlogPost }) {
         <div className="space-y-3 text-right">
           <h3 className="text-xl font-bold leading-9 text-slate-900">{article.title}</h3>
           <p className="text-sm text-[var(--text-muted)]">
-            <span>by {article.authorName ?? "شغبطه"}</span>
-            {article.publishDate ? <span>{` / ${article.publishDate}`}</span> : null}
+            <span>
+              {article.category === "english-articles" ? "by" : "بقلم"}{" "}
+              {article.authorName ?? brand.name}
+            </span>
+            {article.publishDate ? <span>{` · ${formatDate(article.publishDate)}`}</span> : null}
           </p>
           {article.description ? (
             <p

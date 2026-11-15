@@ -1,52 +1,103 @@
 import Image from "next/image"
 import Link from "next/link"
 
-type LogoVariant = "small" | "large" | "footer"
+type LogoVariant = "mark" | "horizontal" | "stacked" | "wordmark"
+type LogoTone = "color" | "white"
 
-const logoConfig: Record<
-  LogoVariant,
-  { src: string; width: number; height: number; alt: string }
-> = {
-  small: {
-    src: "/images/shaghbatta-logo.png",
-    width: 50,
-    height: 50,
-    alt: "شعار شغبطه",
+type LogoConfig = {
+  src: string
+  width: number
+  height: number
+  alt: string
+}
+
+const logoAssets: Record<LogoVariant, Record<LogoTone, LogoConfig>> = {
+  mark: {
+    color: {
+      src: "/brand/logo-mark.png",
+      width: 512,
+      height: 512,
+      alt: "شعار د. هبة اللكاوي",
+    },
+    white: {
+      src: "/brand/logo-mark-white.png",
+      width: 512,
+      height: 512,
+      alt: "شعار د. هبة اللكاوي",
+    },
   },
-  large: {
-    src: "/images/shaghbatta-logo.png",
-    width: 82,
-    height: 82,
-    alt: "شعار شغبطه",
+  horizontal: {
+    color: {
+      src: "/brand/logo-horizontal.png",
+      width: 1200,
+      height: 206,
+      alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
+    },
+    white: {
+      src: "/brand/logo-horizontal-white.png",
+      width: 1200,
+      height: 206,
+      alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
+    },
   },
-  footer: {
-    src: "/images/shaghbatta-logo-horizontal.png",
-    width: 220,
-    height: 80,
-    alt: "شعار شغبطه الأفقي",
+  stacked: {
+    color: {
+      src: "/brand/logo-stacked.png",
+      width: 700,
+      height: 1050,
+      alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
+    },
+    white: {
+      src: "/brand/logo-stacked-white.png",
+      width: 700,
+      height: 1050,
+      alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
+    },
+  },
+  wordmark: {
+    color: {
+      src: "/brand/logo-wordmark.png",
+      width: 1200,
+      height: 262,
+      alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
+    },
+    white: {
+      src: "/brand/logo-wordmark-white.png",
+      width: 1200,
+      height: 262,
+      alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
+    },
   },
 }
 
 export function BrandLogo({
-  variant = "small",
+  variant = "mark",
+  tone = "color",
   href = "/",
+  className,
+  priority = false,
 }: {
   variant?: LogoVariant
+  tone?: LogoTone
   href?: string
+  className?: string
+  priority?: boolean
 }) {
-  const config = logoConfig[variant]
+  const config = logoAssets[variant][tone]
 
   return (
-    <Link href={href} className="inline-flex items-center justify-center">
+    <Link
+      href={href}
+      aria-label={config.alt}
+      className={`inline-flex items-center justify-center ${className ?? ""}`}
+    >
       <Image
-        priority
+        priority={priority}
         src={config.src}
         alt={config.alt}
         width={config.width}
         height={config.height}
-        style={
-          variant === "footer" ? { width: "220px", height: "auto" } : undefined
-        }
+        className="h-auto w-full"
       />
     </Link>
   )

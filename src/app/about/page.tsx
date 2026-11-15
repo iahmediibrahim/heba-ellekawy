@@ -1,17 +1,20 @@
-import type { Metadata } from "next";
-import Image from "next/image";
+import type { Metadata } from "next"
+import Image from "next/image"
 
-import { ServicesSection } from "@/components/home/services-section";
-import { getAboutData } from "@/lib/contentful";
-import { buildMetadata } from "@/lib/metadata";
+import { ServicesSection } from "@/components/sections/services-section"
+import { PageHeader } from "@/components/ui/page-header"
+import { Section } from "@/components/ui/section"
+import { getAboutData } from "@/lib/contentful"
+import { buildMetadata } from "@/lib/metadata"
 
 export async function generateMetadata(): Promise<Metadata> {
   const about = await getAboutData();
 
   return buildMetadata({
-    title: about.title,
+    title: "عن المنصة وخدماتها",
     description: about.description,
-    keywords: ["about", "services", "شغبطه"],
+    keywords: ["الخدمات", "الاستشارات النفسية", "ورش الكتابة"],
+    path: "/about",
     image: about.image
       ? {
           src: about.image.url,
@@ -27,13 +30,11 @@ export default async function AboutPage() {
 
   return (
     <div className="page-shell">
-      <section className="section-stack">
-        <div className="section-heading" data-align="center">
-          <p className="eyebrow">من نحن</p>
-          <h1 className="section-title">{about.title}</h1>
-        </div>
+      <Section>
+        <PageHeader eyebrow="من نحن" title="عن المنصة وخدماتها" />
+
         <div className="surface-card grid items-center gap-6 p-6 lg:grid-cols-2 lg:p-8">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-4xl bg-[#f6ecef]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-4xl bg-[var(--surface-muted)]">
             {about.image ? (
               <Image
                 src={about.image.url}
@@ -57,7 +58,7 @@ export default async function AboutPage() {
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       <ServicesSection services={about.services} />
     </div>

@@ -12,8 +12,10 @@ export function SiteShell({
 }>) {
   return (
     <>
-      <Navigation about={about} />
-      <main className="min-h-screen flex-1">{children}</main>
+      <Navigation />
+      <main id="main-content" className="min-h-screen flex-1">
+        {children}
+      </main>
       <MessengerChat />
       <Footer about={about} />
     </>
