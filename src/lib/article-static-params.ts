@@ -14,9 +14,7 @@ type RawArticle = {
 let client: ReturnType<typeof createClient> | null = null
 
 function hasContentfulConfig() {
-  return Boolean(
-    process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN,
-  )
+  return Boolean(process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN)
 }
 
 function getClient() {
@@ -58,7 +56,7 @@ async function getAllRawArticles(): Promise<RawArticle[]> {
     include: 0,
   })
 
-  return response.items.map(item => ({
+  return response.items.map((item) => ({
     category: String(item.fields.category ?? ""),
     slug: item.fields.slug ? String(item.fields.slug) : undefined,
     title: item.fields.title ? String(item.fields.title) : undefined,
@@ -66,7 +64,7 @@ async function getAllRawArticles(): Promise<RawArticle[]> {
 }
 
 export function getArticleCategoryStaticParams() {
-  return ARTICLE_CATEGORIES.map(category => ({ category }))
+  return ARTICLE_CATEGORIES.map((category) => ({ category }))
 }
 
 export async function getArticleEntryStaticParams() {

@@ -6,11 +6,7 @@ import type { ReactNode } from "react"
  * ولا يتغير شكل زر في مكان ويبقى مختلف في مكان تاني.
  */
 export type ButtonVariant =
-  | "primary"
-  | "secondary"
-  | "onBrand"
-  | "onBrandFlat"
-  | "outlineOnBrand"
+  "primary" | "secondary" | "onBrand" | "onBrandFlat" | "outlineOnBrand"
 
 export type ButtonSize = "sm" | "md" | "lg"
 

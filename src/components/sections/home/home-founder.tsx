@@ -1,6 +1,6 @@
-import Image from "next/image"
 import Link from "next/link"
 
+import { EmptyState } from "@/components/ui/empty-state"
 import { ButtonLink } from "@/components/ui/button"
 import { CardMedia } from "@/components/ui/card"
 import { truncateText } from "@/lib/format"
@@ -49,42 +49,46 @@ export function HomeFounder({
           </div>
         </div>
 
-        <div className="grid gap-4">
-          {stories.map(story => (
-            <article key={story.id} className="surface-muted p-4">
-              <div className="grid items-center gap-4 sm:grid-cols-[5.5rem_1fr]">
-                <div className="relative h-24 overflow-hidden rounded-[1.1rem] bg-white sm:w-[5.5rem]">
-                  {story.heroImage ? (
-                    <CardMedia
-                      src={story.heroImage.url}
-                      alt={story.title}
-                      fill
-                      sizes="88px"
-                    />
-                  ) : null}
+        {stories.length ? (
+          <div className="grid gap-4">
+            {stories.map((story) => (
+              <article key={story.id} className="surface-muted p-4">
+                <div className="grid items-center gap-4 sm:grid-cols-[5.5rem_1fr]">
+                  <div className="relative h-24 overflow-hidden rounded-[1.1rem] bg-white sm:w-[5.5rem]">
+                    {story.heroImage ? (
+                      <CardMedia
+                        src={story.heroImage.url}
+                        alt={story.title}
+                        fill
+                        sizes="88px"
+                      />
+                    ) : null}
+                  </div>
+                  <div className="text-right">
+                    <h3 className="text-lg font-bold text-slate-900">{story.title}</h3>
+                    {story.shortBio ? (
+                      <p className="mt-2 line-clamp-2 text-sm leading-7 text-[var(--text-muted)]">
+                        {story.shortBio}
+                      </p>
+                    ) : null}
+                    {story.pdfUrl ? (
+                      <div className="mt-3">
+                        <Link
+                          href={story.pdfUrl}
+                          className="secondary-button px-4 py-2 text-sm"
+                        >
+                          تحميل PDF
+                        </Link>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
-                <div className="text-right">
-                  <h3 className="text-lg font-bold text-slate-900">{story.title}</h3>
-                  {story.shortBio ? (
-                    <p className="mt-2 line-clamp-2 text-sm leading-7 text-[var(--text-muted)]">
-                      {story.shortBio}
-                    </p>
-                  ) : null}
-                  {story.pdfUrl ? (
-                    <div className="mt-3">
-                      <Link
-                        href={story.pdfUrl}
-                        className="secondary-button px-4 py-2 text-sm"
-                      >
-                        تحميل PDF
-                      </Link>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <EmptyState>لا توجد قصص منشورة حاليًا.</EmptyState>
+        )}
       </div>
     </section>
   )

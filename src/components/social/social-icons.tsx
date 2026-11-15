@@ -8,7 +8,17 @@ function normalizeWhatsapp(value: string | string[] | undefined) {
   return phone ? phone.replace(/\D/g, "") : undefined
 }
 
-export function SocialIcons({ about }: { about: AboutData }) {
+export function SocialIcons({
+  about,
+  variant = "default",
+  label,
+  className,
+}: {
+  about: AboutData
+  variant?: "default" | "on-brand"
+  label?: string
+  className?: string
+}) {
   const whatsapp = normalizeWhatsapp(about.whatsapp)
 
   const items = [
@@ -36,18 +46,28 @@ export function SocialIcons({ about }: { about: AboutData }) {
       icon: <Music4 className="size-4" />,
       className: "hover:border-[#ff5500] hover:text-[#ff5500]",
     },
-  ].filter(item => item.href)
+  ].filter((item) => item.href)
+  const hasAskFm = Boolean(about.askfm)
 
-  return (
+  if (!items.length && !hasAskFm) {
+    return null
+  }
+
+  const baseClassName =
+    variant === "on-brand"
+      ? "border-white/25 text-white/85"
+      : "border-[var(--border)] text-slate-500"
+
+  const list = (
     <ul className="flex flex-wrap items-center gap-2">
-      {items.map(item => (
+      {items.map((item) => (
         <li key={item.label}>
           <Link
             href={item.href!}
             target="_blank"
             rel="noreferrer"
             aria-label={item.label}
-            className={`inline-flex size-9 items-center justify-center rounded-full border border-[var(--border)] text-slate-500 transition ${item.className}`}
+            className={`inline-flex size-9 items-center justify-center rounded-full border transition ${baseClassName} ${item.className}`}
           >
             {item.icon}
           </Link>
@@ -60,12 +80,24 @@ export function SocialIcons({ about }: { about: AboutData }) {
             target="_blank"
             rel="noreferrer"
             aria-label="Ask.fm"
-            className="inline-flex h-9 items-center justify-center rounded-full border border-[var(--border)] px-3 text-xs font-bold text-slate-500 transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            className={`inline-flex h-9 items-center justify-center rounded-full border px-3 text-xs font-bold transition ${
+              variant === "on-brand"
+                ? "border-white/25 text-white/85 hover:border-white hover:text-white"
+                : "border-[var(--border)] text-slate-500 hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            }`}
           >
             Ask.fm
           </Link>
         </li>
       ) : null}
     </ul>
+  )
+
+  return label ? (
+    <nav aria-label={label} className={className}>
+      {list}
+    </nav>
+  ) : (
+    list
   )
 }

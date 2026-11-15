@@ -1,32 +1,32 @@
-import type { Metadata } from "next";
-import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google";
-import "./globals.css";
-import { SiteShell } from "@/components/layout/site-shell";
-import { getAboutData } from "@/lib/contentful";
-import { buildMetadata } from "@/lib/metadata";
+import type { Metadata } from "next"
+import { Noto_Kufi_Arabic, Noto_Naskh_Arabic } from "next/font/google"
+import "./globals.css"
+import { SiteShell } from "@/components/layout/site-shell"
+import { getAboutData } from "@/lib/contentful"
+import { buildMetadata } from "@/lib/metadata"
 
 const headingFont = Noto_Kufi_Arabic({
   variable: "--font-heading",
   subsets: ["arabic"],
   weight: ["400", "700"],
-});
+})
 
 const bodyFont = Noto_Naskh_Arabic({
   variable: "--font-body",
   subsets: ["arabic"],
   weight: ["400", "500", "700"],
-});
+})
 
 export const metadata: Metadata = {
   ...buildMetadata(),
-};
+}
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const about = await getAboutData();
+  const about = await getAboutData()
 
   return (
     <html
@@ -43,5 +43,5 @@ export default async function RootLayout({
         </div>
       </body>
     </html>
-  );
+  )
 }

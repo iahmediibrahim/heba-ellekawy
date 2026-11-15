@@ -1,4 +1,3 @@
-import { ArrowUpLeft, BookOpen } from "lucide-react"
 import Link from "next/link"
 
 import { ButtonLink } from "@/components/ui/button"
@@ -59,7 +58,7 @@ export function HomeFeatured({
       </article>
 
       <div className="grid gap-4">
-        {articles.map(article => (
+        {articles.map((article) => (
           <Link
             key={article.id}
             href={`/articles/${article.category}/${article.slug}`}

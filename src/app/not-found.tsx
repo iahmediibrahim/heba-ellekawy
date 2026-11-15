@@ -24,25 +24,19 @@ export default function NotFound() {
       <section className="brand-panel flex flex-col items-center gap-6 rounded-[2rem] px-6 py-14 text-center">
         <BrandLogo variant="mark" tone="white" className="w-20" />
 
-        <p className="text-sm font-bold uppercase tracking-[0.3em] text-white/70">
-          404
-        </p>
+        <p className="text-sm font-bold uppercase tracking-[0.3em] text-white/70">404</p>
 
         <h1 className="text-3xl font-black leading-[1.5] text-white sm:text-4xl">
           الصفحة اللي بتدور عليها مش موجودة
         </h1>
 
         <p className="max-w-xl text-base leading-9 text-white/85">
-          يمكن يكون الرابط قديم أو اتغيّر. جرّب تتصفح الأقسام من تحت، أو ارجع
-          للصفحة الرئيسية.
+          يمكن يكون الرابط قديم أو اتغيّر. جرّب تتصفح الأقسام من تحت، أو ارجع للصفحة
+          الرئيسية.
         </p>
 
         <div className="flex flex-wrap justify-center gap-3 pt-2">
-          <ButtonLink
-            href="/"
-            variant="onBrandFlat"
-            icon={<Home className="size-4" />}
-          >
+          <ButtonLink href="/" variant="onBrandFlat" icon={<Home className="size-4" />}>
             الصفحة الرئيسية
           </ButtonLink>
           <ButtonLink
@@ -56,14 +50,10 @@ export default function NotFound() {
       </section>
 
       <Section>
-        <SectionHeading
-          eyebrow="روابط مفيدة"
-          title="من هنا تقدر تبدأ"
-          align="center"
-        />
+        <SectionHeading eyebrow="روابط مفيدة" title="من هنا تقدر تبدأ" align="center" />
 
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {suggestions.map(item => {
+          {suggestions.map((item) => {
             const Icon = item.icon
 
             return (

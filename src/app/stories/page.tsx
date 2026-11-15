@@ -1,24 +1,25 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { Download } from "lucide-react";
+import type { Metadata } from "next"
+import { BookOpen, Download } from "lucide-react"
 
-import { ButtonLink } from "@/components/ui/button";
-import { CardMedia } from "@/components/ui/card";
-import { PageHeader } from "@/components/ui/page-header";
-import { Section } from "@/components/ui/section";
-import { getStories } from "@/lib/contentful";
-import { brand } from "@/lib/brand";
-import { formatDate } from "@/lib/format";
-import { buildMetadata } from "@/lib/metadata";
+import { ButtonLink } from "@/components/ui/button"
+import { CardGrid } from "@/components/ui/card-grid"
+import { CardMedia } from "@/components/ui/card"
+import { EmptyState } from "@/components/ui/empty-state"
+import { PageHeader } from "@/components/ui/page-header"
+import { Section } from "@/components/ui/section"
+import { getStories } from "@/lib/contentful"
+import { brand } from "@/lib/brand"
+import { formatDate } from "@/lib/format"
+import { buildMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = buildMetadata({
   title: "القصص القصيرة",
   keywords: ["قصص قصيرة", "تحميل PDF", "د. هبة اللكاوي"],
   path: "/stories",
-});
+})
 
 export default async function StoriesPage() {
-  const stories = await getStories();
+  const stories = await getStories()
 
   return (
     <div className="page-shell">
@@ -29,50 +30,75 @@ export default async function StoriesPage() {
           copy="لقراءة القصة قم بتحميل ملف الـ PDF"
         />
 
-        <div className="grid gap-5 lg:grid-cols-2">
-          {stories.map((story) => (
-            <article key={story.id} className="surface-card p-5">
-              <div className="grid items-center gap-4 md:grid-cols-[1fr_auto]">
-                <div className="space-y-4 text-right">
-                  <div className="flex items-center justify-end gap-4">
-                    <div>
-                      <h2 className="text-xl font-bold text-slate-900">{story.title}</h2>
-                      <p className="mt-2 text-sm text-[var(--text-muted)]">
-                        <span>بقلم {story.authorName ?? brand.name}</span>
-                        {story.publishedDate ? (
-                          <span>{` / ${formatDate(story.publishedDate)}`}</span>
-                        ) : null}
-                      </p>
+        {stories.length ? (
+          <CardGrid columns={2}>
+            {stories.map((story, index) => (
+              <article
+                key={story.id}
+                className="surface-card group grid overflow-hidden transition hover:-translate-y-1 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)]"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-[var(--surface-muted)] md:aspect-auto md:min-h-[18rem]">
+                  {story.heroImage ? (
+                    <CardMedia
+                      src={story.heroImage.url}
+                      alt={story.title}
+                      fill
+                      sizes="(min-width: 768px) 18vw, 100vw"
+                      priority={index === 0}
+                      className="transition duration-500 group-hover:scale-[1.04]"
+                    />
+                  ) : (
+                    <div className="brand-panel flex h-full items-center justify-center">
+                      <BookOpen className="size-10 text-white/90" />
                     </div>
-                    <div className="relative size-20 overflow-hidden rounded-2xl bg-[var(--surface-muted)]">
-                      {story.heroImage ? (
-                        <CardMedia
-                          src={story.heroImage.url}
-                          alt={story.title}
-                          fill
-                          sizes="80px"
-                        />
-                      ) : null}
-                    </div>
-                  </div>
-                  <p className="text-base leading-8 text-[var(--text-muted)]">{story.shortBio}</p>
+                  )}
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/55 to-transparent"
+                  />
                 </div>
-                {story.pdfUrl ? (
-                  <div className="flex justify-start md:justify-center">
-                    <ButtonLink
-                      href={story.pdfUrl}
-                      variant="primary"
-                      icon={<Download className="size-4" />}
-                    >
-                      PDF
-                    </ButtonLink>
+                <div className="flex flex-col justify-between gap-6 p-5 text-right sm:p-6">
+                  <div className="space-y-3">
+                    <p className="eyebrow">قصة قصيرة</p>
+                    <h2 className="text-xl font-bold leading-8 text-slate-900">
+                      {story.title}
+                    </h2>
+                    <p className="flex flex-wrap items-center gap-x-2 text-xs text-[var(--text-muted)]">
+                      <span>بقلم {story.authorName ?? brand.name}</span>
+                      {story.publishedDate ? (
+                        <>
+                          <span aria-hidden="true">·</span>
+                          <time dateTime={story.publishedDate}>
+                            {formatDate(story.publishedDate)}
+                          </time>
+                        </>
+                      ) : null}
+                    </p>
+                    {story.shortBio ? (
+                      <p className="line-clamp-4 text-sm leading-7 text-[var(--text-muted)]">
+                        {story.shortBio}
+                      </p>
+                    ) : null}
                   </div>
-                ) : null}
-              </div>
-            </article>
-          ))}
-        </div>
+                  {story.pdfUrl ? (
+                    <div className="flex justify-start">
+                      <ButtonLink
+                        href={story.pdfUrl}
+                        variant="primary"
+                        icon={<Download className="size-4" />}
+                      >
+                        تحميل القصة
+                      </ButtonLink>
+                    </div>
+                  ) : null}
+                </div>
+              </article>
+            ))}
+          </CardGrid>
+        ) : (
+          <EmptyState>لا توجد قصص منشورة حاليًا.</EmptyState>
+        )}
       </Section>
     </div>
-  );
+  )
 }

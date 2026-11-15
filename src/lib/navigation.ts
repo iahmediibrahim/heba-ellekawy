@@ -69,7 +69,7 @@ export const navigationGroups: NavigationGroup[] = [
 ]
 
 export const blogLinks: NavigationLink[] = blogSections.flatMap(
-  section => section.items,
+  (section) => section.items,
 )
 
 export function isActivePath(pathname: string, href: string) {

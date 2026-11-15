@@ -1,5 +1,3 @@
-import type { ReactNode } from "react"
-
 /**
  * المحتوى الطويل (مقال / سيرة) بنفس تنسيق `.content-html`.
  */

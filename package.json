@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"*.{js,mjs,ts,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"*.{js,mjs,ts,json}\""
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^17.1.5",
@@ -27,6 +29,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.11",
+    "prettier": "^3.10.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -5,13 +5,19 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { ArticleCard } from "@/components/articles/article-card"
+import { ArticleMeta } from "@/components/articles/article-meta"
 import { Breadcrumbs } from "@/components/articles/breadcrumbs"
+import { CategoryPagination } from "@/components/articles/category-pagination"
 import { LatestArticles } from "@/components/articles/latest-articles"
 import { ShareButtons } from "@/components/articles/share-buttons"
 import { FacebookPageEmbed } from "@/components/social/facebook-page-embed"
+import { CardGrid } from "@/components/ui/card-grid"
+import { ContentLayout } from "@/components/ui/content-layout"
+import { EmptyState } from "@/components/ui/empty-state"
+import { PageHeader } from "@/components/ui/page-header"
+import { Section } from "@/components/ui/section"
 import { getArticleEntryStaticParams } from "@/lib/article-static-params"
 import { getCategoryTitle, isCategory } from "@/lib/articles"
-import { brand } from "@/lib/brand"
 import {
   getArticleByCategoryAndSlug,
   getArticlesByCategory,
@@ -19,7 +25,6 @@ import {
   getSiteMetadata,
 } from "@/lib/contentful"
 import { buildMetadata } from "@/lib/metadata"
-import { formatDate } from "@/lib/format"
 import type { ContentfulImage } from "@/lib/types"
 
 export const dynamic = "force-static"
@@ -79,42 +84,6 @@ export async function generateMetadata({
   })
 }
 
-function CategoryPagination({
-  category,
-  currentPage,
-  totalPages,
-}: {
-  category: string
-  currentPage: number
-  totalPages: number
-}) {
-  return (
-    <nav className="flex items-center justify-center gap-2" dir="rtl">
-      {Array.from({ length: totalPages }, (_, index) => {
-        const pageNumber = index + 1
-        const href =
-          pageNumber === 1
-            ? `/articles/${category}`
-            : `/articles/${category}/${pageNumber}`
-
-        return (
-          <Link
-            key={href}
-            href={href}
-            className={`inline-flex size-11 items-center justify-center rounded-full border text-sm font-semibold transition ${
-              pageNumber === currentPage
-                ? "border-[var(--accent)] bg-[var(--accent)] text-white"
-                : "border-[var(--border)] bg-white text-slate-700 hover:border-[var(--accent)]"
-            }`}
-          >
-            {pageNumber}
-          </Link>
-        )
-      })}
-    </nav>
-  )
-}
-
 function PostMedia({ images }: { images: ContentfulImage[] }) {
   if (!images.length) {
     return null
@@ -158,10 +127,7 @@ export default async function ArticleEntryPage({
       notFound()
     }
 
-    const { items, pagination } = await getArticlesByCategory(
-      category,
-      currentPage,
-    )
+    const { items, pagination } = await getArticlesByCategory(category, currentPage)
 
     if (currentPage > pagination.totalPages) {
       notFound()
@@ -169,29 +135,35 @@ export default async function ArticleEntryPage({
 
     return (
       <div className="page-shell">
-        <div className="section-heading" data-align="center">
-          <div className="flex justify-center">
-            <Breadcrumbs
-              items={[
-                { label: "الرئيسية", href: "/" },
-                { label: "المدونة", href: "/blog" },
-                { label: getCategoryTitle(category) },
-              ]}
-            />
-          </div>
-          <p className="eyebrow">صفحات المقالات</p>
-          <h1 className="section-title">{getCategoryTitle(category)}</h1>
-        </div>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {items.map(article => (
-            <ArticleCard key={article.id} article={article} />
-          ))}
-        </div>
-        <CategoryPagination
-          category={category}
-          currentPage={currentPage}
-          totalPages={pagination.totalPages}
-        />
+        <Section>
+          <PageHeader
+            breadcrumbs={
+              <Breadcrumbs
+                items={[
+                  { label: "الرئيسية", href: "/" },
+                  { label: "المدونة", href: "/blog" },
+                  { label: getCategoryTitle(category) },
+                ]}
+              />
+            }
+            eyebrow="صفحات المقالات"
+            title={getCategoryTitle(category)}
+          />
+          {items.length ? (
+            <CardGrid columns={3}>
+              {items.map((article, index) => (
+                <ArticleCard key={article.id} article={article} priority={index === 0} />
+              ))}
+            </CardGrid>
+          ) : (
+            <EmptyState>لا توجد مقالات في هذا القسم حاليًا.</EmptyState>
+          )}
+          <CategoryPagination
+            category={category}
+            currentPage={currentPage}
+            totalPages={pagination.totalPages}
+          />
+        </Section>
       </div>
     )
   }
@@ -210,86 +182,84 @@ export default async function ArticleEntryPage({
   const shareUrl = `${site.siteUrl}/articles/${post.category}/${post.slug}`
 
   return (
-    <div className="page-shell page-shell--grid lg:grid-cols-[1.35fr_0.65fr]">
-      <section className="surface-card p-6 lg:p-8">
-        <div className={`space-y-6 ${isEnglish ? "text-left" : "text-right"}`}>
-          <header className="space-y-3">
-            <div className="flex flex-wrap justify-center">
-              <Breadcrumbs
-                items={[
-                  { label: "الرئيسية", href: "/" },
-                  { label: "المدونة", href: "/blog" },
-                  { label: getCategoryTitle(category), href: `/articles/${category}` },
-                ]}
-              />
-            </div>
-            <h1 className="text-4xl font-black text-slate-900">
-              {post.title}
-              {post.source ? (
-                <span className="pill-badge mr-3 px-4 py-2 text-sm">
-                  {post.source}
-                </span>
-              ) : null}
-            </h1>
-            <p className="text-sm text-[var(--text-muted)]">
-              <span>
-                  {isEnglish ? "by" : "بقلم"}{" "}
-                  {post.authorName ?? brand.name}
-                </span>
-              {post.publishDate ? (
-                <span>{` / ${formatDate(post.publishDate)}`}</span>
-              ) : null}
-            </p>
-          </header>
-
-          {post.heroImage ? (
-            <div className="relative aspect-video overflow-hidden rounded-4xl bg-[var(--surface-muted)]">
-              <Image
-                src={post.heroImage.url}
-                alt={post.title}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 60vw, 100vw"
-              />
-            </div>
-          ) : null}
-
-          <div
-            className={`content-html text-base leading-9 text-slate-700 ${isEnglish ? "mx-auto max-w-3xl text-left" : "mx-auto max-w-3xl text-right"}`}
-            dangerouslySetInnerHTML={{
-              __html: post.bodyHtml ?? `<p>${post.description ?? ""}</p>`,
-            }}
+    <ContentLayout
+      aside={
+        <>
+          <LatestArticles articles={latestArticles} />
+          <FacebookPageEmbed link="https://www.facebook.com/ShaghbattaPsychiatrist/" />
+        </>
+      }
+    >
+      <div className={`space-y-6 ${isEnglish ? "text-left" : "text-right"}`}>
+        <div className="flex flex-wrap justify-center">
+          <Breadcrumbs
+            items={[
+              { label: "الرئيسية", href: "/" },
+              { label: "المدونة", href: "/blog" },
+              { label: getCategoryTitle(category), href: `/articles/${category}` },
+            ]}
           />
-
-          <PostMedia images={post.shortStoryImages} />
-
-          <div className="space-y-4">
-            <h2 className="text-center text-lg font-bold text-slate-900">
-              مشاركة المقال:
-            </h2>
-            <ShareButtons url={shareUrl} title={post.title} />
-          </div>
-
-          <div className={isEnglish ? "text-left" : "text-right"}>
-            <Link
-              href={`/articles/${post.category}`}
-              className="primary-button"
-            >
-              {isEnglish ? (
-                <ArrowLeft className="size-4" />
-              ) : (
-                <ArrowRight className="size-4" />
-              )}
-              {isEnglish ? "Back To Articles" : "الرجوع للمقالات"}
-            </Link>
-          </div>
         </div>
-      </section>
+        <header
+          className={`brand-panel space-y-4 rounded-[var(--radius-card)] p-6 sm:p-8 ${
+            isEnglish ? "text-left" : "text-right"
+          }`}
+        >
+          <p className="brand-eyebrow">{getCategoryTitle(category)}</p>
+          <h1 className="text-3xl font-black leading-tight text-white sm:text-4xl">
+            {post.title}
+            {post.source ? (
+              <span className="mr-3 mt-2 inline-flex rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+                {post.source}
+              </span>
+            ) : null}
+          </h1>
+          <ArticleMeta
+            article={post}
+            className={isEnglish ? "text-left" : "text-right"}
+            tone="on-brand"
+          />
+        </header>
 
-      <aside className="space-y-6">
-        <LatestArticles articles={latestArticles} />
-        <FacebookPageEmbed link="https://www.facebook.com/ShaghbattaPsychiatrist/" />
-      </aside>
-    </div>
+        {post.heroImage ? (
+          <div className="relative aspect-video overflow-hidden rounded-4xl bg-[var(--surface-muted)]">
+            <Image
+              src={post.heroImage.url}
+              alt={post.title}
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 60vw, 100vw"
+              priority
+              loading="eager"
+            />
+          </div>
+        ) : null}
+
+        <div
+          className={`content-html text-base leading-9 text-slate-700 ${isEnglish ? "mx-auto max-w-3xl text-left" : "mx-auto max-w-3xl text-right"}`}
+          dangerouslySetInnerHTML={{
+            __html: post.bodyHtml ?? `<p>${post.description ?? ""}</p>`,
+          }}
+        />
+
+        <PostMedia images={post.shortStoryImages} />
+
+        <div className="space-y-4">
+          <h2 className="text-center text-lg font-bold text-slate-900">مشاركة المقال:</h2>
+          <ShareButtons url={shareUrl} title={post.title} />
+        </div>
+
+        <div className={isEnglish ? "text-left" : "text-right"}>
+          <Link href={`/articles/${post.category}`} className="primary-button">
+            {isEnglish ? (
+              <ArrowLeft className="size-4" />
+            ) : (
+              <ArrowRight className="size-4" />
+            )}
+            {isEnglish ? "Back To Articles" : "الرجوع للمقالات"}
+          </Link>
+        </div>
+      </div>
+    </ContentLayout>
   )
 }

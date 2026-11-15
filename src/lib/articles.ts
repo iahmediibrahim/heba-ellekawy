@@ -1,4 +1,4 @@
-import { ARTICLE_CATEGORIES, type ArticleCategory } from "@/lib/types";
+import { ARTICLE_CATEGORIES, type ArticleCategory } from "@/lib/types"
 
 const categoryTitles: Record<ArticleCategory, string> = {
   "thoughts-and-tips": "خواطر ونصائح نفسية",
@@ -11,12 +11,12 @@ const categoryTitles: Record<ArticleCategory, string> = {
   "me-and-places": "أنا والأماكن",
   "short-story": "قصص مصورة",
   "opinion-articles-and-problems-mail": "بريد المشكلات",
-};
+}
 
 export function isCategory(value: string): value is ArticleCategory {
-  return ARTICLE_CATEGORIES.includes(value as ArticleCategory);
+  return ARTICLE_CATEGORIES.includes(value as ArticleCategory)
 }
 
 export function getCategoryTitle(category: ArticleCategory) {
-  return categoryTitles[category];
+  return categoryTitles[category]
 }

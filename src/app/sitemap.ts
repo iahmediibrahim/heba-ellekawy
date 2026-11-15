@@ -1,10 +1,10 @@
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from "next"
 
-import { getLatestArticles } from "@/lib/contentful";
-import { getSiteUrl } from "@/lib/site-url";
-import { ARTICLE_CATEGORIES } from "@/lib/types";
+import { getLatestArticles } from "@/lib/contentful"
+import { getSiteUrl } from "@/lib/site-url"
+import { ARTICLE_CATEGORIES } from "@/lib/types"
 
-export const revalidate = 3600;
+export const revalidate = 3600
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl()
@@ -18,23 +18,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/stories", priority: 0.7 },
     { path: "/novels-books", priority: 0.7 },
     { path: "/contact", priority: 0.8 },
-  ].map(route => ({
+  ].map((route) => ({
     url: `${siteUrl}${route.path}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: route.priority,
   }))
 
-  const categoryRoutes = ARTICLE_CATEGORIES.map(category => ({
+  const categoryRoutes = ARTICLE_CATEGORIES.map((category) => ({
     url: `${siteUrl}/articles/${category}`,
     lastModified: now,
     changeFrequency: "weekly" as const,
     priority: 0.7,
-    }))
+  }))
 
   const articles = await getLatestArticles(200)
 
-  const articleRoutes = articles.map(article => ({
+  const articleRoutes = articles.map((article) => ({
     url: `${siteUrl}/articles/${article.category}/${article.slug}`,
     lastModified: article.publishDate ? new Date(article.publishDate) : now,
     changeFrequency: "monthly" as const,

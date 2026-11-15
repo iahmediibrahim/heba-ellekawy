@@ -19,9 +19,7 @@ export function CardGrid({
   }[columns]
 
   return (
-    <div
-      className={`grid gap-5 ${columnsClass} ${className ?? ""}`.trim()}
-    >
+    <div className={`grid gap-5 ${columnsClass} ${className ?? ""}`.trim()}>
       {children}
     </div>
   )

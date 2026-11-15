@@ -1,39 +1,16 @@
-"use client"
-
-import Script from "next/script"
+import { MessageCircle } from "lucide-react"
 
 export function MessengerChat() {
   return (
-    <>
-      <div id="fb-root" />
-      <div
-        dangerouslySetInnerHTML={{
-          __html:
-            '<div class="fb-customerchat" attribution="biz_inbox" page_id="213414642507674"></div>',
-        }}
-      />
-      <Script
-        id="messenger-chat-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.fbAsyncInit = function () {
-              if (!window.FB) return;
-              window.FB.init({
-                appId: '4390895540950487',
-                autoLogAppEvents: true,
-                xfbml: true,
-                version: 'v19.0'
-              });
-            };
-          `,
-        }}
-      />
-      <Script
-        id="messenger-chat-sdk"
-        strategy="afterInteractive"
-        src="https://connect.facebook.net/ar_AR/sdk/xfbml.customerchat.js"
-      />
-    </>
+    <a
+      href="https://m.me/213414642507674"
+      target="_blank"
+      rel="noreferrer"
+      aria-label="تواصل عبر ماسنجر"
+      title="تواصل عبر ماسنجر"
+      className="primary-button fixed bottom-5 right-5 z-40 inline-flex size-12 items-center justify-center rounded-full p-0! sm:bottom-6 sm:right-6"
+    >
+      <MessageCircle className="size-6" aria-hidden="true" />
+    </a>
   )
 }

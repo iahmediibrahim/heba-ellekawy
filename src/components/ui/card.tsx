@@ -25,9 +25,7 @@ export function CardMuted({
   className?: string
   as?: ElementType
 }) {
-  return (
-    <Tag className={`surface-muted ${className ?? ""}`.trim()}>{children}</Tag>
-  )
+  return <Tag className={`surface-muted ${className ?? ""}`.trim()}>{children}</Tag>
 }
 
 export function CardMedia({
@@ -60,6 +58,7 @@ export function CardMedia({
           alt={alt}
           fill
           priority={priority}
+          loading={priority ? "eager" : "lazy"}
           sizes={sizes}
           className="object-cover"
         />

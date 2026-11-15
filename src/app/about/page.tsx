@@ -2,13 +2,12 @@ import type { Metadata } from "next"
 import Image from "next/image"
 
 import { ServicesSection } from "@/components/sections/services-section"
-import { PageHeader } from "@/components/ui/page-header"
 import { Section } from "@/components/ui/section"
 import { getAboutData } from "@/lib/contentful"
 import { buildMetadata } from "@/lib/metadata"
 
 export async function generateMetadata(): Promise<Metadata> {
-  const about = await getAboutData();
+  const about = await getAboutData()
 
   return buildMetadata({
     title: "عن المنصة وخدماتها",
@@ -22,19 +21,33 @@ export async function generateMetadata(): Promise<Metadata> {
           height: about.image.height,
         }
       : undefined,
-  });
+  })
 }
 
 export default async function AboutPage() {
-  const about = await getAboutData();
+  const about = await getAboutData()
 
   return (
     <div className="page-shell">
-      <Section>
-        <PageHeader eyebrow="من نحن" title="عن المنصة وخدماتها" />
-
-        <div className="surface-card grid items-center gap-6 p-6 lg:grid-cols-2 lg:p-8">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-4xl bg-[var(--surface-muted)]">
+      <Section className="gap-0">
+        <div className="grid overflow-hidden rounded-[var(--radius-card)] border border-[var(--border)] bg-[var(--surface)] lg:grid-cols-2">
+          <div className="brand-panel order-2 flex flex-col justify-between gap-8 p-6 sm:p-8 lg:order-1 lg:p-10">
+            <div className="space-y-5">
+              <p className="brand-eyebrow">من نحن</p>
+              <h1 className="text-3xl font-black leading-tight text-white sm:text-4xl">
+                عن المنصة وخدماتها
+              </h1>
+              <p className="text-base leading-8 text-white/85">{about.description}</p>
+            </div>
+            <Image
+              src="/images/signature.png"
+              alt="توقيع هبة اللكاوي"
+              width={150}
+              height={60}
+              className="w-[130px] brightness-0 invert"
+            />
+          </div>
+          <div className="relative order-1 aspect-[4/3] bg-[var(--surface-muted)] lg:order-2 lg:aspect-auto lg:min-h-[36rem]">
             {about.image ? (
               <Image
                 src={about.image.url}
@@ -42,25 +55,18 @@ export default async function AboutPage() {
                 fill
                 className="object-cover"
                 sizes="(min-width: 1024px) 45vw, 100vw"
+                priority
               />
-            ) : null}
-          </div>
-          <div className="space-y-6 text-right">
-            <p className="text-lg leading-10 text-[var(--text-muted)]">{about.description}</p>
-            <div className="flex justify-end">
-              <Image
-                src="/images/signature.png"
-                alt="توقيع هبة اللكاوي"
-                width={150}
-                height={60}
-                className="h-auto w-[150px]"
-              />
-            </div>
+            ) : (
+              <div className="flex h-full items-center justify-center p-8 text-center text-[var(--text-muted)]">
+                عن المنصة وخدماتها
+              </div>
+            )}
           </div>
         </div>
       </Section>
 
       <ServicesSection services={about.services} />
     </div>
-  );
+  )
 }

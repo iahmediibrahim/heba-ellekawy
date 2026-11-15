@@ -1,5 +1,5 @@
-import Link from "next/link"
 import { Heart, Mail, Phone } from "lucide-react"
+import Link from "next/link"
 
 import { BrandLogo } from "@/components/layout/logo"
 import { SocialIcons } from "@/components/social/social-icons"
@@ -10,15 +10,15 @@ import type { AboutData } from "@/lib/types"
 export function Footer({ about }: { about: AboutData }) {
   const primaryPhone = about.phone[0]
   const links = navigationGroups
-    .filter(group => group.href)
-    .map(group => ({ label: group.label!, href: group.href! }))
+    .filter((group) => group.href)
+    .map((group) => ({ label: group.label!, href: group.href! }))
 
   return (
     <footer className="mt-6 border-t border-[var(--border)] bg-white px-5 pb-6 pt-10 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <BrandLogo variant="wordmark" className="w-[190px] sm:order-2" />
-          <p className="text-sm leading-7 text-[var(--text-muted)] sm:order-1">
+          <BrandLogo variant="wordmark" className="w-[190px] sm:order-2 lg:w-[260px]" />
+          <p className="text-lg leading-7 text-[var(--text-muted)] sm:order-1">
             {brand.tagline}
           </p>
         </div>
@@ -27,7 +27,7 @@ export function Footer({ about }: { about: AboutData }) {
           aria-label="روابط الفوتر"
           className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--border)] pt-6 text-sm"
         >
-          {links.map(item => (
+          {links.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -75,7 +75,9 @@ export function Footer({ about }: { about: AboutData }) {
           </div>
 
           <span className="inline-flex flex-wrap items-center gap-2" dir="ltr">
-            <span>© {new Date().getFullYear()} {brand.nameEn}</span>
+            <span>
+              © {new Date().getFullYear()} {brand.nameEn}
+            </span>
             <span aria-hidden="true">·</span>
             <span>built with</span>
             <Heart className="size-4 text-[#ff6a5d]" />

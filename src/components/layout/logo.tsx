@@ -89,7 +89,7 @@ export function BrandLogo({
     <Link
       href={href}
       aria-label={config.alt}
-      className={`inline-flex items-center justify-center ${className ?? ""}`}
+      className={` flex items-center justify-center ${className ?? ""}`}
     >
       <Image
         priority={priority}

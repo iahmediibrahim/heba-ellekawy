@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata } from "next"
 
-import { brand, siteDescription, siteTitle } from "@/lib/brand";
-import { getSiteUrl } from "@/lib/site-url";
-import type { SeoImage } from "@/lib/types";
+import { brand, siteDescription, siteTitle } from "@/lib/brand"
+import { getSiteUrl } from "@/lib/site-url"
+import type { SeoImage } from "@/lib/types"
 
 const DEFAULT_OG_IMAGE = {
   src: "/brand/banner-cyan.png",
   width: 1200,
   height: 675,
-};
+}
 
 export function buildMetadata({
   title,
@@ -18,29 +18,27 @@ export function buildMetadata({
   type = "website",
   path,
 }: {
-  title?: string;
-  description?: string;
-  keywords?: string[];
-  image?: SeoImage;
-  type?: "website" | "article";
+  title?: string
+  description?: string
+  keywords?: string[]
+  image?: SeoImage
+  type?: "website" | "article"
   /** المسار الحالي للصفحة، لاستخدامه في canonical */
-  path?: string;
+  path?: string
 } = {}): Metadata {
-  const siteUrl = getSiteUrl();
-  const fullTitle = title ? `${title} | ${brand.name}` : siteTitle;
-  const resolvedImage = image ?? DEFAULT_OG_IMAGE;
+  const siteUrl = getSiteUrl()
+  const fullTitle = title ? `${title} | ${brand.name}` : siteTitle
+  const resolvedImage = image ?? DEFAULT_OG_IMAGE
   const imageUrl = resolvedImage.src.startsWith("http")
     ? resolvedImage.src
-    : `${siteUrl}${resolvedImage.src}`;
+    : `${siteUrl}${resolvedImage.src}`
 
   return {
     metadataBase: new URL(siteUrl),
     title: fullTitle,
     description,
     keywords: [...brand.keywords, ...keywords],
-    ...(path
-      ? { alternates: { canonical: path } }
-      : {}),
+    ...(path ? { alternates: { canonical: path } } : {}),
     openGraph: {
       title: fullTitle,
       description,
@@ -63,5 +61,5 @@ export function buildMetadata({
       description,
       images: [imageUrl],
     },
-  };
+  }
 }

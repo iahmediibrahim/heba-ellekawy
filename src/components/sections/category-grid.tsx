@@ -6,7 +6,7 @@ import { blogSections } from "@/lib/navigation"
 export function CategoryGrid() {
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {blogSections.map(section => (
+      {blogSections.map((section) => (
         <div key={section.title} className="surface-card p-5 sm:p-6">
           <div className="mb-4 flex items-center gap-3">
             <span className="flex size-11 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]">
@@ -19,7 +19,7 @@ export function CategoryGrid() {
             <h3 className="text-xl font-bold text-slate-900">{section.title}</h3>
           </div>
           <ul className="grid gap-2 sm:grid-cols-2">
-            {section.items.map(item => (
+            {section.items.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}

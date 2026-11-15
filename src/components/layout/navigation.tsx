@@ -6,11 +6,7 @@ import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
 import { BrandLogo } from "@/components/layout/logo"
-import {
-  isActivePath,
-  navigationGroups,
-  type NavigationGroup,
-} from "@/lib/navigation"
+import { isActivePath, navigationGroups, type NavigationGroup } from "@/lib/navigation"
 
 function linkClass(active: boolean) {
   return active
@@ -31,8 +27,7 @@ function GroupDropdown({
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const hasSections = Boolean(group.sections?.length)
-  const links =
-    group.items ?? group.sections?.flatMap(section => section.items) ?? []
+  const links = group.items ?? group.sections?.flatMap((section) => section.items) ?? []
 
   useEffect(() => {
     function handlePointerDown(event: MouseEvent) {
@@ -56,7 +51,7 @@ function GroupDropdown({
     }
   }, [onOpenChange])
 
-  const isActive = links.some(link => isActivePath(pathname, link.href))
+  const isActive = links.some((link) => isActivePath(pathname, link.href))
 
   return (
     <div
@@ -104,13 +99,13 @@ function GroupDropdown({
       >
         {group.sections ? (
           <div className="grid gap-1 sm:grid-cols-2">
-            {group.sections.map(section => (
+            {group.sections.map((section) => (
               <div key={section.title} className="p-2">
                 <p className="mb-2 px-2 text-xs font-bold uppercase tracking-wide text-[var(--accent-cyan)]">
                   {section.title}
                 </p>
                 <div className="flex flex-col gap-1">
-                  {section.items.map(item => {
+                  {section.items.map((item) => {
                     const active = isActivePath(pathname, item.href)
 
                     return (
@@ -134,7 +129,7 @@ function GroupDropdown({
           </div>
         ) : (
           <div className="flex flex-col gap-1">
-            {group.items?.map(item => {
+            {group.items?.map((item) => {
               const active = isActivePath(pathname, item.href)
 
               return (
@@ -189,7 +184,7 @@ export function Navigation() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <div className="order-3 flex items-center gap-3">
             <div className="hidden lg:block">
-              <BrandLogo variant="horizontal" className="w-[210px]" priority />
+              <BrandLogo variant="horizontal" className="w-[300px]" priority />
             </div>
             <div className="lg:hidden">
               <BrandLogo variant="mark" className="w-11" priority />
@@ -197,7 +192,7 @@ export function Navigation() {
           </div>
 
           <nav className="order-2 hidden items-center justify-center gap-6 lg:flex">
-            {navigationGroups.map(group =>
+            {navigationGroups.map((group) =>
               group.href && !group.sections ? (
                 <Link
                   key={group.label}
@@ -214,26 +209,21 @@ export function Navigation() {
                   group={group}
                   pathname={pathname}
                   open={openGroup === group.label}
-                  onOpenChange={next =>
-                    setOpenGroup(() => (next ? group.label : null))
-                  }
+                  onOpenChange={(next) => setOpenGroup(() => (next ? group.label : null))}
                 />
               ),
             )}
           </nav>
 
           <div className="order-1 hidden items-center gap-3 lg:flex">
-            <Link
-              href="/contact"
-              className="primary-button px-5 py-2.5 text-sm"
-            >
+            <Link href="/contact" className="primary-button px-5 py-2.5 text-sm">
               احجز جلستك
             </Link>
           </div>
 
           <button
             type="button"
-            onClick={() => setMenuOpen(current => !current)}
+            onClick={() => setMenuOpen((current) => !current)}
             className="order-1 inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-white p-3 text-[var(--accent)] lg:hidden"
             aria-label={menuOpen ? "إغلاق القائمة" : "فتح القائمة"}
             aria-expanded={menuOpen}
@@ -253,7 +243,7 @@ export function Navigation() {
                 احجز جلستك
               </Link>
 
-              {navigationGroups.map(group => {
+              {navigationGroups.map((group) => {
                 const groupLinks = group.items ?? []
 
                 if (!group.sections && !group.items) {
@@ -276,8 +266,8 @@ export function Navigation() {
                 const expanded = openGroup === group.label
                 const isGroupActive = [
                   ...groupLinks,
-                  ...(group.sections?.flatMap(section => section.items) ?? []),
-                ].some(link => isActivePath(pathname, link.href))
+                  ...(group.sections?.flatMap((section) => section.items) ?? []),
+                ].some((link) => isActivePath(pathname, link.href))
 
                 return (
                   <div
@@ -313,7 +303,7 @@ export function Navigation() {
                         aria-expanded={expanded}
                         aria-label={`${expanded ? "إغلاق" : "فتح"} قائمة ${group.label}`}
                         onClick={() =>
-                          setOpenGroup(current =>
+                          setOpenGroup((current) =>
                             current === group.label ? null : group.label,
                           )
                         }
@@ -327,13 +317,13 @@ export function Navigation() {
 
                     {expanded ? (
                       <div className="mt-3 flex flex-col gap-3">
-                        {group.sections?.map(section => (
+                        {group.sections?.map((section) => (
                           <div key={section.title}>
                             <p className="mb-1.5 px-1 text-xs font-bold uppercase tracking-wide text-[var(--accent-cyan)]">
                               {section.title}
                             </p>
                             <div className="flex flex-col gap-1">
-                              {section.items.map(item => (
+                              {section.items.map((item) => (
                                 <Link
                                   key={item.href}
                                   href={item.href}
@@ -351,7 +341,7 @@ export function Navigation() {
                           </div>
                         ))}
 
-                        {group.items?.map(item => (
+                        {group.items?.map((item) => (
                           <Link
                             key={item.href}
                             href={item.href}

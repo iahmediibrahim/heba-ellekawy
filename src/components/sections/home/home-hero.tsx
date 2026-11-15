@@ -64,9 +64,7 @@ export function HomeHero({
             <div className="brand-panel flex h-full flex-col items-center justify-center gap-6 p-8 text-center">
               <BrandLogo variant="mark" tone="white" className="w-28" />
               <p className="text-xl font-bold text-white">د. هبة اللكاوي</p>
-              <p className="text-sm text-white/80">
-                psychiatrist & psychotherapist
-              </p>
+              <p className="text-sm text-white/80">psychiatrist & psychotherapist</p>
             </div>
           )}
 

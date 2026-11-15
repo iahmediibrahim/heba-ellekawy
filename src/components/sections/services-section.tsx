@@ -1,9 +1,9 @@
 import Link from "next/link"
-import type { Metadata } from "next"
 
+import { EmptyState } from "@/components/ui/empty-state"
 import { Section, SectionHeading } from "@/components/ui/section"
-import { ServiceCard } from "@/components/sections/service-card";
-import type { Service } from "@/lib/types";
+import { ServiceGrid } from "@/components/sections/service-grid"
+import type { Service } from "@/lib/types"
 
 export function ServicesSection({ services }: { services: Service[] }) {
   return (
@@ -15,11 +15,11 @@ export function ServicesSection({ services }: { services: Service[] }) {
         align="center"
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {services.map((service) => (
-          <ServiceCard key={service.id} service={service} />
-        ))}
-      </div>
+      {services.length ? (
+        <ServiceGrid services={services} />
+      ) : (
+        <EmptyState>لا توجد خدمات متاحة حاليًا.</EmptyState>
+      )}
 
       <div className="flex justify-center">
         <Link href="/contact" className="primary-button">
@@ -27,5 +27,5 @@ export function ServicesSection({ services }: { services: Service[] }) {
         </Link>
       </div>
     </Section>
-  );
+  )
 }

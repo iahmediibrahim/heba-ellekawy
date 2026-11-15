@@ -1,14 +1,14 @@
-import { Footer } from "@/components/layout/footer";
-import { MessengerChat } from "@/components/layout/messenger-chat";
-import { Navigation } from "@/components/layout/navigation";
-import type { AboutData } from "@/lib/types";
+import { Footer } from "@/components/layout/footer"
+import { MessengerChat } from "@/components/layout/messenger-chat"
+import { Navigation } from "@/components/layout/navigation"
+import type { AboutData } from "@/lib/types"
 
 export function SiteShell({
   about,
   children,
 }: Readonly<{
-  about: AboutData;
-  children: React.ReactNode;
+  about: AboutData
+  children: React.ReactNode
 }>) {
   return (
     <>
@@ -19,5 +19,5 @@ export function SiteShell({
       <MessengerChat />
       <Footer about={about} />
     </>
-  );
+  )
 }

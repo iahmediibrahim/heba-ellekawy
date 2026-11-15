@@ -1,5 +1,5 @@
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer"
- import { cache } from "react"
+import { cache } from "react"
 import {
   createClient,
   type Asset,
@@ -175,9 +175,7 @@ const fallbackNovels: Novel[] = [
 ]
 
 function hasContentfulConfig() {
-  return Boolean(
-    process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN,
-  )
+  return Boolean(process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN)
 }
 
 function getClient(): ContentfulClient | null {
@@ -217,15 +215,8 @@ function formatAssetUrl(url?: string) {
   return url.startsWith("//") ? `https:${url}` : url
 }
 
-function mapImage(
-  asset?: Asset<undefined, string>,
-): ContentfulImage | undefined {
-  if (
-    !asset ||
-    typeof asset !== "object" ||
-    !("fields" in asset) ||
-    !asset.fields
-  ) {
+function mapImage(asset?: Asset<undefined, string>): ContentfulImage | undefined {
+  if (!asset || typeof asset !== "object" || !("fields" in asset) || !asset.fields) {
     return undefined
   }
 
@@ -332,51 +323,44 @@ function mapAuthor(entry: ContentfulEntry | undefined): AuthorData | undefined {
 }
 
 function mapAbout(entry: ContentfulEntry | undefined): AboutData {
+  if (!entry) {
+    return fallbackAbout
+  }
+
   return {
-    title: String(entry?.fields.title ?? fallbackAbout.title),
-    description:
-      mapTextField(entry?.fields.description) || fallbackAbout.description,
+    title: String(entry.fields.title ?? fallbackAbout.title),
+    description: mapTextField(entry.fields.description) || fallbackAbout.description,
     image:
-      mapImage(entry?.fields.image as Asset<undefined, string> | undefined) ??
+      mapImage(entry.fields.image as Asset<undefined, string> | undefined) ??
       fallbackAbout.image,
-    phone: ensureArray(entry?.fields.phone).map(String),
-    mail: entry?.fields.mail ? String(entry.fields.mail) : undefined,
-    facebook: entry?.fields.facebook
-      ? String(entry.fields.facebook)
-      : undefined,
-    instagram: entry?.fields.instagram
-      ? String(entry.fields.instagram)
-      : undefined,
-    soundcloud: entry?.fields.soundcloud
-      ? String(entry.fields.soundcloud)
-      : undefined,
-    askfm: entry?.fields.askfm ? String(entry.fields.askfm) : undefined,
-    whatsapp: ensureArray(entry?.fields.whatsapp).map(String),
-    soundCloudTrackHtml: mapHtmlField(entry?.fields.soundCloudTrack),
-    instagramFeed: entry?.fields.instagramFeed
+    phone: ensureArray(entry.fields.phone).map(String),
+    mail: entry.fields.mail ? String(entry.fields.mail) : undefined,
+    facebook: entry.fields.facebook ? String(entry.fields.facebook) : undefined,
+    instagram: entry.fields.instagram ? String(entry.fields.instagram) : undefined,
+    soundcloud: entry.fields.soundcloud ? String(entry.fields.soundcloud) : undefined,
+    askfm: entry.fields.askfm ? String(entry.fields.askfm) : undefined,
+    whatsapp: ensureArray(entry.fields.whatsapp).map(String),
+    soundCloudTrackHtml: mapHtmlField(entry.fields.soundCloudTrack),
+    instagramFeed: entry.fields.instagramFeed
       ? String(entry.fields.instagramFeed)
       : undefined,
-    services: ensureArray(
-      entry?.fields.services as ContentfulEntry[] | undefined,
-    ).map(mapService),
+    services: ensureArray(entry.fields.services as ContentfulEntry[] | undefined).map(
+      mapService,
+    ),
   }
 }
 
 function mapPost(entry: ContentfulEntry): BlogPost {
   const rawCategory = String(entry.fields.category ?? "other")
   const category = isArticleCategory(rawCategory) ? rawCategory : "other"
-  const rawSlug = String(
-    entry.fields.slug ?? entry.fields.title ?? entry.sys.id,
-  )
+  const rawSlug = String(entry.fields.slug ?? entry.fields.title ?? entry.sys.id)
 
   return {
     id: entry.sys.id,
     title: String(entry.fields.title ?? ""),
     slug: normalizeSlug(rawSlug),
     category,
-    publishDate: entry.fields.publishDate
-      ? String(entry.fields.publishDate)
-      : undefined,
+    publishDate: entry.fields.publishDate ? String(entry.fields.publishDate) : undefined,
     source: entry.fields.source ? String(entry.fields.source) : undefined,
     description: mapTextField(entry.fields.description),
     bodyHtml: mapHtmlField(entry.fields.body),
@@ -388,9 +372,7 @@ function mapPost(entry: ContentfulEntry): BlogPost {
         : undefined,
     instagram: entry.fields.instagram ? String(entry.fields.instagram) : null,
     featured: Boolean(entry.fields.featured),
-    heroImage: mapImage(
-      entry.fields.heroImage as Asset<undefined, string> | undefined,
-    ),
+    heroImage: mapImage(entry.fields.heroImage as Asset<undefined, string> | undefined),
     shortStoryImages: ensureArray(
       entry.fields.shortStory as Asset<undefined, string>[] | undefined,
     )
@@ -417,9 +399,7 @@ function mapStory(entry: ContentfulEntry): Story {
     shortBio: mapTextField(entry.fields.shortBio),
     pdfUrl: formatAssetUrl(pdfAsset?.fields.file?.url),
     pdfFileName: pdfAsset?.fields.file?.fileName,
-    heroImage: mapImage(
-      entry.fields.heroImage as Asset<undefined, string> | undefined,
-    ),
+    heroImage: mapImage(entry.fields.heroImage as Asset<undefined, string> | undefined),
   }
 }
 
@@ -443,9 +423,7 @@ function mapNovel(entry: ContentfulEntry): Novel {
     pdfUrl: formatAssetUrl(pdfAsset?.fields.file?.url),
     pdfFileName: pdfAsset?.fields.file?.fileName,
     inShop: Boolean(entry.fields.inShop),
-    heroImage: mapImage(
-      entry.fields.heroImage as Asset<undefined, string> | undefined,
-    ),
+    heroImage: mapImage(entry.fields.heroImage as Asset<undefined, string> | undefined),
   }
 }
 
@@ -466,7 +444,7 @@ export const getAboutData = cache(async function getAboutData() {
     include: 2,
   })
 
-  return mapAbout(response.items[0]) ?? fallbackAbout
+  return mapAbout(response.items[0])
 })
 
 export const getAuthorData = cache(async function getAuthorData() {
@@ -514,7 +492,7 @@ export const getFeaturedArticles = cache(async function getFeaturedArticles(limi
   const contentfulClient = getClient()
 
   if (contentfulClient === null) {
-    return fallbackArticles.filter(article => article.featured).slice(0, limit)
+    return fallbackArticles.filter((article) => article.featured).slice(0, limit)
   }
 
   const response = await contentfulClient.getEntries({
@@ -560,116 +538,136 @@ export const getNovels = cache(async function getNovels() {
   return response.items.map((item: ContentfulEntry) => mapNovel(item))
 })
 
-export const getArticlesByCategory = cache(async function getArticlesByCategory(
-  category: ArticleCategory,
+export const getArticles = cache(async function getArticles(
   page = 1,
   pageSize = DEFAULT_PAGE_SIZE,
+  search = "",
+  category?: ArticleCategory,
 ): Promise<PaginatedArticles> {
+  const currentPage = Math.max(1, Math.floor(page))
+  const currentPageSize = Math.max(1, Math.floor(pageSize))
+  const normalizedSearch = search.trim().toLocaleLowerCase()
   const contentfulClient = getClient()
 
   if (contentfulClient === null) {
-    const items = fallbackArticles.filter(
-      (post: BlogPost) => post.category === category,
-    )
+    const items = fallbackArticles.filter((post: BlogPost) => {
+      const matchesCategory = !category || post.category === category
+      const searchableText =
+        `${post.title} ${post.description ?? ""} ${post.bodyHtml ?? ""}`.toLocaleLowerCase()
+      const matchesSearch = !normalizedSearch || searchableText.includes(normalizedSearch)
+
+      return matchesCategory && matchesSearch
+    })
+    const totalPages = Math.max(1, Math.ceil(items.length / currentPageSize))
 
     return {
-      items: items.slice((page - 1) * pageSize, page * pageSize),
+      items: items.slice(
+        (currentPage - 1) * currentPageSize,
+        currentPage * currentPageSize,
+      ),
       pagination: {
-        currentPage: page,
-        pageSize,
+        currentPage,
+        pageSize: currentPageSize,
         totalItems: items.length,
-        totalPages: Math.max(1, Math.ceil(items.length / pageSize)),
+        totalPages,
       },
     }
   }
 
-  const skip = Math.max(page - 1, 0) * pageSize
-
   const response = await contentfulClient.getEntries({
     content_type: "blogPost",
-    "fields.category": category,
+    ...(category ? { "fields.category": category } : {}),
+    ...(search.trim() ? { query: search.trim() } : {}),
     order: ["-fields.publishDate"],
-    limit: pageSize,
-    skip,
+    limit: currentPageSize,
+    skip: (currentPage - 1) * currentPageSize,
     include: 2,
   })
 
   return {
     items: response.items.map((item: ContentfulEntry) => mapPost(item)),
     pagination: {
-      currentPage: page,
-      pageSize,
+      currentPage,
+      pageSize: currentPageSize,
       totalItems: response.total,
-      totalPages: Math.max(1, Math.ceil(response.total / pageSize)),
+      totalPages: Math.max(1, Math.ceil(response.total / currentPageSize)),
     },
   }
 })
 
-export const getArticleByCategoryAndSlug = cache(async function getArticleByCategoryAndSlug(
+export const getArticlesByCategory = cache(async function getArticlesByCategory(
   category: ArticleCategory,
-  slug: string,
-) {
-  const normalizedTarget = normalizeSlug(decodeURIComponent(slug))
-  const decodedSlug = decodeURIComponent(slug)
-
-  const contentfulClient = getClient()
-
-  if (contentfulClient === null) {
-    return (
-      fallbackArticles.find(
-        (item: BlogPost) =>
-          item.category === category &&
-          (item.slug === normalizedTarget ||
-            normalizeSlug(item.title) === normalizedTarget),
-      ) ?? null
-    )
-  }
-
-  const directResponse = await contentfulClient.getEntries({
-    content_type: "blogPost",
-    "fields.category": category,
-    "fields.slug": decodedSlug,
-    limit: 1,
-    include: 2,
-  })
-
-  if (directResponse.items.length > 0) {
-    return mapPost(directResponse.items[0] as ContentfulEntry)
-  }
-
-  const response = await contentfulClient.getEntries({
-    content_type: "blogPost",
-    "fields.category": category,
-    limit: 200,
-    include: 2,
-  })
-
-  const match = response.items
-    .map((item: ContentfulEntry) => mapPost(item))
-    .find(
-      (item: BlogPost) =>
-        item.slug === normalizedTarget ||
-        normalizeSlug(item.title) === normalizedTarget,
-    )
-
-  return match ?? null
+  page = 1,
+  pageSize = DEFAULT_PAGE_SIZE,
+): Promise<PaginatedArticles> {
+  return getArticles(page, pageSize, "", category)
 })
 
-export const getHomePageData = cache(async function getHomePageData(): Promise<HomePageData> {
-  const [about, featuredAuthor, featuredArticles, latestStories] =
-    await Promise.all([
+export const getArticleByCategoryAndSlug = cache(
+  async function getArticleByCategoryAndSlug(category: ArticleCategory, slug: string) {
+    const normalizedTarget = normalizeSlug(decodeURIComponent(slug))
+    const decodedSlug = decodeURIComponent(slug)
+
+    const contentfulClient = getClient()
+
+    if (contentfulClient === null) {
+      return (
+        fallbackArticles.find(
+          (item: BlogPost) =>
+            item.category === category &&
+            (item.slug === normalizedTarget ||
+              normalizeSlug(item.title) === normalizedTarget),
+        ) ?? null
+      )
+    }
+
+    const directResponse = await contentfulClient.getEntries({
+      content_type: "blogPost",
+      "fields.category": category,
+      "fields.slug": decodedSlug,
+      limit: 1,
+      include: 2,
+    })
+
+    if (directResponse.items.length > 0) {
+      return mapPost(directResponse.items[0] as ContentfulEntry)
+    }
+
+    const response = await contentfulClient.getEntries({
+      content_type: "blogPost",
+      "fields.category": category,
+      limit: 200,
+      include: 2,
+    })
+
+    const match = response.items
+      .map((item: ContentfulEntry) => mapPost(item))
+      .find(
+        (item: BlogPost) =>
+          item.slug === normalizedTarget ||
+          normalizeSlug(item.title) === normalizedTarget,
+      )
+
+    return match ?? null
+  },
+)
+
+export const getHomePageData = cache(
+  async function getHomePageData(): Promise<HomePageData> {
+    const [about, featuredAuthor, featuredArticles, latestStories] = await Promise.all([
       getAboutData(),
       getAuthorData(),
       getFeaturedArticles(8),
       getStories(),
     ])
 
-  return {
-    site: getSiteMetadata(),
-    about,
-    featuredAuthor,
-    featuredArticles,
-    latestStories: latestStories.slice(0, 2),
-    services: about.services,
-  }
-})
+    return {
+      site: getSiteMetadata(),
+      about,
+      featuredAuthor,
+      featuredArticles,
+      latestStories: latestStories.slice(0, 2),
+      services: about.services,
+    }
+  },
+)
