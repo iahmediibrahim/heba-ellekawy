@@ -1,9 +1,8 @@
 import { createClient } from "contentful"
 import kebabCase from "lodash/kebabCase"
 
+import { CATEGORY_ARTICLES_PER_PAGE } from "@/lib/articles"
 import { ARTICLE_CATEGORIES, type ArticleCategory } from "@/lib/types"
-
-const POSTS_PER_PAGE = 6
 
 type RawArticle = {
   category: string
@@ -93,7 +92,7 @@ export async function getArticleEntryStaticParams() {
 
   for (const category of ARTICLE_CATEGORIES) {
     const count = categoryCounts.get(category) ?? 0
-    const totalPages = Math.ceil(count / POSTS_PER_PAGE)
+    const totalPages = Math.ceil(count / CATEGORY_ARTICLES_PER_PAGE)
 
     for (let page = 2; page <= totalPages; page += 1) {
       params.push({

@@ -24,6 +24,7 @@ export function NovelCard({
             fill
             sizes="(min-width: 1280px) 25vw, (min-width: 768px) 35vw, 100vw"
             priority={priority}
+            fetchPriority={priority ? "high" : undefined}
             loading={priority ? "eager" : "lazy"}
             className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
           />

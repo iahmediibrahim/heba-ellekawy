@@ -24,5 +24,5 @@ export function getSiteUrl() {
     normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ??
     normalizeSiteUrl(process.env.VERCEL_URL) ??
     DEFAULT_SITE_URL
-  )
+  ).replace(/\/+$/, "")
 }

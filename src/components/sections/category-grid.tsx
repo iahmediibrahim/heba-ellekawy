@@ -3,7 +3,9 @@ import Link from "next/link"
 
 import { blogSections } from "@/lib/navigation"
 
-export function CategoryGrid() {
+export function CategoryGrid({ headingLevel = 3 }: { headingLevel?: 2 | 3 }) {
+  const Heading = headingLevel === 2 ? "h2" : "h3"
+
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {blogSections.map((section) => (
@@ -16,7 +18,9 @@ export function CategoryGrid() {
                 <Globe2 className="size-5" />
               )}
             </span>
-            <h3 className="text-xl font-bold text-slate-900">{section.title}</h3>
+            <Heading className="text-xl font-bold text-slate-900">
+              {section.title}
+            </Heading>
           </div>
           <ul className="grid gap-2 sm:grid-cols-2">
             {section.items.map((item) => (

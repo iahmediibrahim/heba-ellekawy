@@ -56,6 +56,7 @@ export default async function AboutPage() {
                 className="object-cover"
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 priority
+                fetchPriority="high"
               />
             ) : (
               <div className="flex h-full items-center justify-center p-8 text-center text-[var(--text-muted)]">

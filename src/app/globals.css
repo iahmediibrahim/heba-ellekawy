@@ -27,6 +27,8 @@
   --brand-gradient: linear-gradient(135deg, #2fb2e6 0%, #277ee1 52%, #1a5fd0 100%);
   --brand-gradient-deep: linear-gradient(140deg, #1a6fd6 0%, #1757b4 60%, #123f8c 100%);
   --brand-ring: 0 0 0 4px rgba(39, 126, 225, 0.12);
+  --font-body: "IBM Plex Sans Arabic";
+  --font-heading: "IBM Plex Sans Arabic";
 }
 
 @theme inline {
@@ -43,7 +45,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body), serif;
+  font-family: var(--font-body), sans-serif;
   background-image:
     radial-gradient(circle at top, rgba(43, 178, 230, 0.16), transparent 34%),
     linear-gradient(180deg, #fbfdff 0%, #f5f9fd 40%, #eef4fb 100%);
@@ -56,7 +58,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-heading), serif;
+  font-family: var(--font-heading), sans-serif;
 }
 
 a,

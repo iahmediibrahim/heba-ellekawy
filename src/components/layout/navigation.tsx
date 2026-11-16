@@ -184,10 +184,10 @@ export function Navigation() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <div className="order-3 flex items-center gap-3">
             <div className="hidden lg:block">
-              <BrandLogo variant="horizontal" className="w-[300px]" priority />
+              <BrandLogo variant="horizontal" className="w-[300px]" sizes="300px" />
             </div>
             <div className="lg:hidden">
-              <BrandLogo variant="mark" className="w-11" priority />
+              <BrandLogo variant="mark" className="w-11" sizes="44px" />
             </div>
           </div>
 

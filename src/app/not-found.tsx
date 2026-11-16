@@ -22,7 +22,7 @@ export default function NotFound() {
   return (
     <div className="page-shell">
       <section className="brand-panel flex flex-col items-center gap-6 rounded-[2rem] px-6 py-14 text-center">
-        <BrandLogo variant="mark" tone="white" className="w-20" />
+        <BrandLogo variant="mark" tone="white" className="w-20" sizes="80px" />
 
         <p className="text-sm font-bold uppercase tracking-[0.3em] text-white/70">404</p>
 

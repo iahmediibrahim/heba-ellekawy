@@ -11,6 +11,7 @@ import { CategoryPagination } from "@/components/articles/category-pagination"
 import { LatestArticles } from "@/components/articles/latest-articles"
 import { ShareButtons } from "@/components/articles/share-buttons"
 import { FacebookPageEmbed } from "@/components/social/facebook-page-embed"
+import { JsonLd } from "@/components/seo/json-ld"
 import { CardGrid } from "@/components/ui/card-grid"
 import { ContentLayout } from "@/components/ui/content-layout"
 import { EmptyState } from "@/components/ui/empty-state"
@@ -230,7 +231,9 @@ export default async function ArticleEntryPage({
               className="object-cover"
               sizes="(min-width: 1024px) 60vw, 100vw"
               priority
+              fetchPriority="high"
               loading="eager"
+              quality={60}
             />
           </div>
         ) : null}
@@ -259,6 +262,35 @@ export default async function ArticleEntryPage({
             {isEnglish ? "Back To Articles" : "الرجوع للمقالات"}
           </Link>
         </div>
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": shareUrl,
+            },
+            headline: post.title,
+            ...(post.description ? { description: post.description } : {}),
+            ...(post.publishDate ? { datePublished: post.publishDate } : {}),
+            ...(post.heroImage ? { image: [post.heroImage.url] } : {}),
+            author: {
+              "@type": "Person",
+              name: post.authorName ?? site.author,
+            },
+            publisher: {
+              "@type": "Organization",
+              name: site.author,
+              url: site.siteUrl,
+              logo: {
+                "@type": "ImageObject",
+                url: `${site.siteUrl}/brand/logo-mark.png`,
+              },
+            },
+            articleSection: getCategoryTitle(category),
+            inLanguage: isEnglish ? "en" : "ar-EG",
+          }}
+        />
       </div>
     </ContentLayout>
   )

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next"
 
-import { getLatestArticles } from "@/lib/contentful"
+import { CATEGORY_ARTICLES_PER_PAGE } from "@/lib/articles"
+import { getSitemapArticles } from "@/lib/contentful"
 import { getSiteUrl } from "@/lib/site-url"
 import { ARTICLE_CATEGORIES } from "@/lib/types"
 
@@ -32,7 +33,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  const articles = await getLatestArticles(200)
+  const articles = await getSitemapArticles()
+  const categoryCounts = new Map<string, number>()
+
+  for (const article of articles) {
+    categoryCounts.set(article.category, (categoryCounts.get(article.category) ?? 0) + 1)
+  }
+
+  const categoryPaginationRoutes = ARTICLE_CATEGORIES.flatMap((category) => {
+    const totalPages = Math.ceil(
+      (categoryCounts.get(category) ?? 0) / CATEGORY_ARTICLES_PER_PAGE,
+    )
+
+    return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => {
+      const page = index + 2
+
+      return {
+        url: `${siteUrl}/articles/${category}/${page}`,
+        lastModified: now,
+        changeFrequency: "weekly" as const,
+        priority: 0.5,
+      }
+    })
+  })
 
   const articleRoutes = articles.map((article) => ({
     url: `${siteUrl}/articles/${article.category}/${article.slug}`,
@@ -41,5 +64,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }))
 
-  return [...staticRoutes, ...categoryRoutes, ...articleRoutes]
+  return [
+    ...staticRoutes,
+    ...categoryRoutes,
+    ...categoryPaginationRoutes,
+    ...articleRoutes,
+  ]
 }

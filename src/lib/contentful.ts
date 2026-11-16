@@ -9,6 +9,7 @@ import {
 } from "contentful"
 import kebabCase from "lodash/kebabCase"
 
+import { CATEGORY_ARTICLES_PER_PAGE } from "@/lib/articles"
 import { brand, siteDescription, siteTitle } from "@/lib/brand"
 import { getSiteUrl } from "@/lib/site-url"
 import {
@@ -26,7 +27,7 @@ import {
   type Story,
 } from "@/lib/types"
 
-const DEFAULT_PAGE_SIZE = 6
+const DEFAULT_PAGE_SIZE = CATEGORY_ARTICLES_PER_PAGE
 
 const siteMetadata: SiteMetadata = {
   title: siteTitle,
@@ -486,6 +487,36 @@ export const getLatestArticles = cache(async function getLatestArticles(limit = 
   })
 
   return response.items.map((item: ContentfulEntry) => mapPost(item))
+})
+
+export const getSitemapArticles = cache(async function getSitemapArticles() {
+  const contentfulClient = getClient()
+
+  if (contentfulClient === null) {
+    return fallbackArticles.map(({ category, slug, publishDate }) => ({
+      category,
+      slug,
+      publishDate,
+    }))
+  }
+
+  const response = await contentfulClient.getEntries({
+    content_type: "blogPost",
+    order: ["-fields.publishDate"],
+    select: ["fields.category", "fields.slug", "fields.title", "fields.publishDate"],
+    limit: 1000,
+    include: 0,
+  })
+
+  return response.items.map((item: ContentfulEntry) => {
+    const article = mapPost(item)
+
+    return {
+      category: article.category,
+      slug: article.slug,
+      publishDate: article.publishDate,
+    }
+  })
 })
 
 export const getFeaturedArticles = cache(async function getFeaturedArticles(limit = 8) {

@@ -1,5 +1,7 @@
 import { ARTICLE_CATEGORIES, type ArticleCategory } from "@/lib/types"
 
+export const CATEGORY_ARTICLES_PER_PAGE = 6
+
 const categoryTitles: Record<ArticleCategory, string> = {
   "thoughts-and-tips": "خواطر ونصائح نفسية",
   "family-and-educational": "مقالات عن العلاقات والتربية",

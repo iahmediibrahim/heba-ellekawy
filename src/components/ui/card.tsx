@@ -36,6 +36,7 @@ export function CardMedia({
   ratio = "aspect-[16/10]",
   priority = false,
   fill = false,
+  quality,
 }: {
   src?: string
   alt: string
@@ -43,6 +44,7 @@ export function CardMedia({
   className?: string
   ratio?: string
   priority?: boolean
+  quality?: number
   /** يملأ الحاوية الأب بدل ما يحدد ارتفاعه بنفسه */
   fill?: boolean
 }) {
@@ -58,7 +60,9 @@ export function CardMedia({
           alt={alt}
           fill
           priority={priority}
+          fetchPriority={priority ? "high" : undefined}
           loading={priority ? "eager" : "lazy"}
+          quality={quality}
           sizes={sizes}
           className="object-cover"
         />

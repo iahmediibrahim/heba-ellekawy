@@ -17,7 +17,11 @@ export function Footer({ about }: { about: AboutData }) {
     <footer className="mt-6 border-t border-[var(--border)] bg-white px-5 pb-6 pt-10 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <BrandLogo variant="wordmark" className="w-[190px] sm:order-2 lg:w-[260px]" />
+          <BrandLogo
+            variant="wordmark"
+            className="w-[190px] sm:order-2 lg:w-[260px]"
+            sizes="(min-width: 1024px) 260px, 190px"
+          />
           <p className="text-lg leading-7 text-[var(--text-muted)] sm:order-1">
             {brand.tagline}
           </p>

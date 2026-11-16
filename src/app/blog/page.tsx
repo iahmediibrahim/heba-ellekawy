@@ -83,7 +83,7 @@ export default async function BlogPage({
           copy="مجموعة مقالات في النفس والعلاقات والتربية والكتابة الحرة — اختر القسم الذي يناسبك وابدأ القراءة."
         />
 
-        <CategoryGrid />
+        <CategoryGrid headingLevel={2} />
       </Section>
 
       <Section>

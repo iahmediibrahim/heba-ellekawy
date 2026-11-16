@@ -23,6 +23,7 @@ export function ArticleCard({
             className="object-cover transition duration-500 hover:scale-[1.03]"
             sizes="(min-width: 1024px) 30vw, (min-width: 768px) 50vw, 100vw"
             priority={priority}
+            fetchPriority={priority ? "high" : undefined}
             loading={priority ? "eager" : "lazy"}
           />
         ) : null}

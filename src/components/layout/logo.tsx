@@ -75,12 +75,14 @@ export function BrandLogo({
   tone = "color",
   href = "/",
   className,
+  sizes,
   priority = false,
 }: {
   variant?: LogoVariant
   tone?: LogoTone
   href?: string
   className?: string
+  sizes: string
   priority?: boolean
 }) {
   const config = logoAssets[variant][tone]
@@ -97,6 +99,7 @@ export function BrandLogo({
         alt={config.alt}
         width={config.width}
         height={config.height}
+        sizes={sizes}
         className="h-auto w-full"
       />
     </Link>
