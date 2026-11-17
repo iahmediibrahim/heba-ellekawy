@@ -30,14 +30,17 @@ function GroupDropdown({
   const links = group.items ?? group.sections?.flatMap((section) => section.items) ?? []
 
   useEffect(() => {
+    // The desktop dropdown remains mounted while CSS hides it on mobile.
     function handlePointerDown(event: MouseEvent) {
-      if (!wrapperRef.current?.contains(event.target as Node)) {
+      const wrapper = wrapperRef.current
+
+      if (wrapper?.getClientRects().length && !wrapper.contains(event.target as Node)) {
         onOpenChange(false)
       }
     }
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (wrapperRef.current?.getClientRects().length && event.key === "Escape") {
         onOpenChange(false)
       }
     }
@@ -180,7 +183,11 @@ export function Navigation() {
         تخطَّ إلى المحتوى
       </a>
 
-      <header className="glass-header sticky top-0 z-40 border-b border-[var(--border)]">
+      <header
+        className={`glass-header sticky top-3 z-40 mx-auto w-[calc(100%-1.5rem)] max-w-7xl border border-[var(--border)] sm:w-[calc(100%-2.5rem)] ${
+          menuOpen ? "rounded-[1.75rem]" : "rounded-full"
+        }`}
+      >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <div className="order-3 flex items-center gap-3">
             <div className="hidden lg:block">
@@ -233,13 +240,9 @@ export function Navigation() {
         </div>
 
         {menuOpen ? (
-          <div className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-[var(--border)] bg-white px-4 py-5 lg:hidden">
+          <div className="max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-b-[1.75rem] border-t border-[var(--border)] bg-white px-4 py-5 lg:hidden">
             <div className="mx-auto flex max-w-7xl flex-col gap-2 text-right">
-              <Link
-                href="/contact"
-                onClick={() => setMenuOpen(false)}
-                className="primary-button mb-2 w-full"
-              >
+              <Link href="/contact" className="primary-button mb-2 w-full">
                 احجز جلستك
               </Link>
 
@@ -251,7 +254,6 @@ export function Navigation() {
                     <Link
                       key={group.label}
                       href={group.href!}
-                      onClick={() => setMenuOpen(false)}
                       className={`rounded-2xl px-4 py-3 font-semibold ${
                         isActivePath(pathname, group.href!)
                           ? "bg-[var(--surface-muted)] text-[var(--accent)]"
@@ -278,7 +280,6 @@ export function Navigation() {
                       {group.href ? (
                         <Link
                           href={group.href}
-                          onClick={() => setMenuOpen(false)}
                           className={`font-semibold ${
                             isGroupActive
                               ? "text-[var(--accent)]"
@@ -327,7 +328,6 @@ export function Navigation() {
                                 <Link
                                   key={item.href}
                                   href={item.href}
-                                  onClick={() => setMenuOpen(false)}
                                   className={`rounded-xl px-3 py-2 text-sm ${
                                     isActivePath(pathname, item.href)
                                       ? "bg-[var(--surface-muted)] text-[var(--accent)]"
@@ -345,7 +345,6 @@ export function Navigation() {
                           <Link
                             key={item.href}
                             href={item.href}
-                            onClick={() => setMenuOpen(false)}
                             className={`rounded-xl px-3 py-2 text-sm ${
                               isActivePath(pathname, item.href)
                                 ? "bg-[var(--surface-muted)] text-[var(--accent)]"

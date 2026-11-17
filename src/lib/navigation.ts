@@ -54,12 +54,12 @@ export const blogSections: NavigationSection[] = [
 
 export const navigationGroups: NavigationGroup[] = [
   { label: "الرئيسية", href: "/" },
+  { label: "عن المؤسس", href: "/author" },
   {
     label: "المدونة",
     href: "/blog",
     sections: blogSections,
   },
-  { label: "عن المؤسس", href: "/author" },
 ]
 
 export const blogLinks: NavigationLink[] = blogSections.flatMap(
