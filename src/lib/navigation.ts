@@ -46,6 +46,8 @@ export const blogSections: NavigationSection[] = [
       { label: "رحلتي مع الكتابة", href: "/articles/my-journey-with-writing" },
       { label: "قصص مصورة", href: "/articles/short-story" },
       { label: "English Articles", href: "/articles/english-articles" },
+      { label: "القصص القصيرة", href: "/stories" },
+      { label: "الروايات والكتب", href: "/novels-books" },
     ],
   },
 ]
@@ -57,15 +59,7 @@ export const navigationGroups: NavigationGroup[] = [
     href: "/blog",
     sections: blogSections,
   },
-  { label: "الروايات والكتب", href: "/novels-books" },
-  { label: "القصص القصيرة", href: "/stories" },
-  {
-    label: "من أنا",
-    items: [
-      { label: "عن المؤسس", href: "/author" },
-      { label: "عن المنصة وخدماتها", href: "/about" },
-    ],
-  },
+  { label: "عن المؤسس", href: "/author" },
 ]
 
 export const blogLinks: NavigationLink[] = blogSections.flatMap(

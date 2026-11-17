@@ -16,10 +16,10 @@ export function Footer({ about }: { about: AboutData }) {
   return (
     <footer className="mt-6 border-t border-[var(--border)] bg-white px-5 pb-6 pt-10 sm:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <BrandLogo
             variant="wordmark"
-            className="w-[190px] sm:order-2 lg:w-[260px]"
+            className="w-[190px] self-end sm:order-2 lg:w-[260px]"
             sizes="(min-width: 1024px) 260px, 190px"
           />
           <p className="text-lg leading-7 text-[var(--text-muted)] sm:order-1">
@@ -40,12 +40,6 @@ export function Footer({ about }: { about: AboutData }) {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/about"
-            className="font-semibold text-slate-700 transition hover:text-[var(--accent)]"
-          >
-            عن المنصة
-          </Link>
           <Link
             href="/author"
             className="font-semibold text-slate-700 transition hover:text-[var(--accent)]"
@@ -84,14 +78,14 @@ export function Footer({ about }: { about: AboutData }) {
             </span>
             <span aria-hidden="true">·</span>
             <span>built with</span>
-            <Heart className="size-4 text-[#ff6a5d]" />
+            <Heart className="size-4 " />
             <Link
-              href="https://ahmedibrahim.ninja/"
+              href="https://ahmediibrahim.vercel.app/"
               target="_blank"
               rel="noreferrer"
               className="font-semibold text-[var(--accent)]"
             >
-              @ahmedIbrahim
+              By @ahmedIbrahim
             </Link>
           </span>
         </div>

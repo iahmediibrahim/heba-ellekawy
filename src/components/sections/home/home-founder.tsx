@@ -1,8 +1,4 @@
-import Link from "next/link"
-
-import { EmptyState } from "@/components/ui/empty-state"
 import { ButtonLink } from "@/components/ui/button"
-import { CardMedia } from "@/components/ui/card"
 import { truncateText } from "@/lib/format"
 import type { AuthorData, Story } from "@/lib/types"
 
@@ -32,13 +28,10 @@ export function HomeFounder({
           <ButtonLink href="/author" variant="primary">
             السيرة الكاملة
           </ButtonLink>
-          <ButtonLink href="/about" variant="secondary">
-            عن المنصة
-          </ButtonLink>
         </div>
       </div>
 
-      <div className="surface-card p-6 lg:p-8">
+      {/* <div className="surface-card p-6 lg:p-8">
         <div className="mb-6 flex items-center justify-between gap-4">
           <ButtonLink href="/stories" variant="secondary">
             عرض كل القصص
@@ -89,7 +82,7 @@ export function HomeFounder({
         ) : (
           <EmptyState>لا توجد قصص منشورة حاليًا.</EmptyState>
         )}
-      </div>
+      </div> */}
     </section>
   )
 }

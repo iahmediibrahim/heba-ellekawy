@@ -65,7 +65,7 @@ function GroupDropdown({
           <Link
             href={group.href}
             className={`inline-flex items-center text-sm font-semibold ${linkClass(
-              isActivePath(pathname, group.href),
+              isActive || isActivePath(pathname, group.href),
             )}`}
           >
             {group.label}
