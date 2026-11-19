@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
 import { LuBookOpen, LuDownload } from "react-icons/lu"
 
-import { ButtonLink } from "@/components/ui/button"
 import { NovelCard } from "@/components/novels/novel-card"
 import { NovelsBooksTabs } from "@/components/novels/novels-books-tabs"
+import { ButtonLink } from "@/components/ui/button"
 import { CardMedia } from "@/components/ui/card"
 import { CardGrid } from "@/components/ui/card-grid"
 import { EmptyState } from "@/components/ui/empty-state"
@@ -54,7 +54,7 @@ export default async function NovelsBooksPage() {
               )}
             </Section>
 
-            <Section>
+            <Section className="mt-8">
               <SectionHeading
                 eyebrow="نسخ إلكترونية"
                 title="روايات إلكترونية"
@@ -133,7 +133,7 @@ export default async function NovelsBooksPage() {
                           </p>
                         ) : null}
                       </div>
-                      {story.pdfUrl ? (
+                      {story.pdfUrl && story.pdfUrl !== "#" ? (
                         <div className="flex justify-start">
                           <ButtonLink
                             href={story.pdfUrl}

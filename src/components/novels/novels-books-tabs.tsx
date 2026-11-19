@@ -21,7 +21,9 @@ export function NovelsBooksTabs({
 
   useEffect(() => {
     if (window.location.hash === "#short-stories") {
-      setActiveTab("stories")
+      requestAnimationFrame(() => {
+        setActiveTab("stories")
+      })
     }
   }, [])
 

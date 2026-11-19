@@ -77,7 +77,7 @@ export function Footer({ about }: { about: AboutData }) {
             <Link
               href="https://ahmediibrahim.vercel.app/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="font-semibold text-[var(--accent)]"
             >
               By @ahmedIbrahim

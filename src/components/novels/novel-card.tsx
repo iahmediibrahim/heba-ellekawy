@@ -64,7 +64,7 @@ export function NovelCard({
           ) : null}
         </div>
 
-        {!novel.inShop && novel.pdfUrl ? (
+        {!novel.inShop && novel.pdfUrl && novel.pdfUrl !== "#" ? (
           <div className="flex justify-start">
             <ButtonLink
               href={novel.pdfUrl}

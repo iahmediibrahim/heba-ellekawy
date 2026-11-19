@@ -81,7 +81,7 @@ export function ContactDetails({ about }: { about: AboutData }) {
                   <Link
                     href={method.href}
                     target={method.external ? "_blank" : undefined}
-                    rel={method.external ? "noreferrer" : undefined}
+                    rel={method.external ? "noopener noreferrer" : undefined}
                     className="break-all text-sm font-semibold text-slate-800 transition hover:text-[var(--accent)] sm:text-base"
                   >
                     {method.value}

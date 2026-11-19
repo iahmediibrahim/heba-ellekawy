@@ -61,7 +61,7 @@ export function FacebookPageEmbed({ link }: { link: string }) {
         data-show-facepile="true"
       >
         <blockquote cite={link} className="fb-xfbml-parse-ignore">
-          <a href={link} target="_blank" rel="noreferrer">
+          <a href={link} target="_blank" rel="noopener noreferrer">
             Shaghbatta
           </a>
         </blockquote>
@@ -84,7 +84,7 @@ export function FacebookPageEmbed({ link }: { link: string }) {
       <a
         href={link}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className="mt-4 inline-flex text-sm font-semibold text-[var(--accent)] transition hover:text-[var(--accent-cyan)]"
       >
         فتح صفحتنا على فيسبوك

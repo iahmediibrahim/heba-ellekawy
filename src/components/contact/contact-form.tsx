@@ -114,7 +114,16 @@ export function ContactForm() {
 
       <div aria-live="polite">
         {status === "success" ? (
-          <p className="font-semibold text-emerald-600">تم إرسال رسالتك بنجاح.</p>
+          <div className="space-y-3">
+            <p className="font-semibold text-emerald-600">تم إرسال رسالتك بنجاح.</p>
+            <button
+              type="button"
+              className="secondary-button w-full"
+              onClick={() => setStatus("idle")}
+            >
+              إرسال رسالة أخرى
+            </button>
+          </div>
         ) : (
           <button
             type="submit"

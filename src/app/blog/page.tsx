@@ -11,7 +11,7 @@ import { EmptyState } from "@/components/ui/empty-state"
 import { PageHeader } from "@/components/ui/page-header"
 import { Section, SectionHeading } from "@/components/ui/section"
 import { getCategoryTitle, isCategory } from "@/lib/articles"
-import { getArticles } from "@/lib/contentful"
+import { getArticles, getFeaturedArticles } from "@/lib/contentful"
 import { buildMetadata } from "@/lib/metadata"
 import { ARTICLE_CATEGORIES } from "@/lib/types"
 
@@ -61,22 +61,26 @@ export default async function BlogPage({
   const requestedPage = typeof params.page === "string" ? Number(params.page) : 1
   const page =
     Number.isSafeInteger(requestedPage) && requestedPage > 0 ? requestedPage : 1
-  const { items: articles, pagination } = await getArticles(
-    page,
-    ARTICLES_PER_PAGE,
-    query,
-    category,
-  )
+  const hasFilters = Boolean(query || category)
+  const [result, featuredArticles] = await Promise.all([
+    getArticles(page, ARTICLES_PER_PAGE, query, category),
+    !hasFilters && page === 1 ? getFeaturedArticles(1) : Promise.resolve([]),
+  ])
+  const { items: articles, pagination } = result
 
   if (page > pagination.totalPages) {
     redirect(getPageHref(pagination.totalPages, query, category))
   }
 
-  const hasFilters = Boolean(query || category)
+  const featuredArticle =
+    !hasFilters && page === 1 ? (featuredArticles[0] ?? articles[0]) : undefined
+  const listingArticles = featuredArticle
+    ? articles.filter((article) => article.id !== featuredArticle.id)
+    : articles
 
   return (
     <div className="page-shell">
-      <Section>
+      <Section className="gap-5">
         <PageHeader
           eyebrow="فضاءات"
           title="مدونة شغبطة"
@@ -87,6 +91,13 @@ export default async function BlogPage({
       </Section>
 
       <Section>
+        {featuredArticle ? (
+          <div className="section-stack">
+            <SectionHeading eyebrow="مختارات" title="مقال مميز" />
+            <ArticleCard article={featuredArticle} featured priority />
+          </div>
+        ) : null}
+
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SectionHeading
             eyebrow={hasFilters ? "نتائج البحث" : "مكتبة المقالات"}
@@ -99,7 +110,7 @@ export default async function BlogPage({
           action="/blog"
           method="get"
           role="search"
-          className="surface-card grid gap-4 p-5 md:grid-cols-[minmax(0,1.3fr)_minmax(220px,0.7fr)_auto] md:items-end"
+          className="surface-card grid gap-3 p-4 md:grid-cols-[minmax(0,1.3fr)_minmax(220px,0.7fr)_auto] md:items-end"
         >
           <label className="space-y-2 text-sm font-semibold text-slate-800">
             <span>ابحث في المقالات</span>
@@ -144,19 +155,19 @@ export default async function BlogPage({
           </div>
         </form>
 
-        {articles.length ? (
+        {listingArticles.length ? (
           <CardGrid columns={3}>
-            {articles.map((article) => (
+            {listingArticles.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
           </CardGrid>
-        ) : (
+        ) : hasFilters || !featuredArticle ? (
           <EmptyState>
             {hasFilters
               ? "لم نعثر على مقالات تطابق اختياراتك."
               : "لا توجد مقالات منشورة حاليًا."}
           </EmptyState>
-        )}
+        ) : null}
 
         {pagination.totalPages > 1 ? (
           <nav

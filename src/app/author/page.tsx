@@ -1,10 +1,13 @@
 import type { Metadata } from "next"
 import { FaFacebookF } from "react-icons/fa6"
 
-import { LatestArticles } from "@/components/articles/latest-articles"
+import { ArticleCard } from "@/components/articles/article-card"
 import { ButtonLink } from "@/components/ui/button"
 import { CardMedia } from "@/components/ui/card"
+import { CardGrid } from "@/components/ui/card-grid"
+import { EmptyState } from "@/components/ui/empty-state"
 import { Prose } from "@/components/ui/prose"
+import { SectionHeading } from "@/components/ui/section"
 import { getAuthorData, getLatestArticles } from "@/lib/contentful"
 import { buildMetadata } from "@/lib/metadata"
 
@@ -12,9 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const author = await getAuthorData()
 
   return buildMetadata({
-    title: author
-      ? `${author.name} ${author.title ? `- ${author.title}` : ""}`
-      : "عن المؤسس",
+    title: `${author.name} ${author.title ? `- ${author.title}` : ""}`,
     description: author?.shortBio,
     keywords: ["عن المؤسس", "السيرة الذاتية", "د. هبة اللكاوي"],
     path: "/author",
@@ -31,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AuthorPage() {
   const [author, latestArticles] = await Promise.all([
     getAuthorData(),
-    getLatestArticles(5),
+    getLatestArticles(3),
   ])
 
   const authorSections = [
@@ -41,50 +42,35 @@ export default async function AuthorPage() {
   ]
 
   return (
-    <div className="page-shell page-shell--grid lg:grid-cols-[1.35fr_0.65fr]">
-      <div className="space-y-6">
-        <section className="surface-card grid gap-6 p-6 sm:p-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(150px,0.7fr)] lg:p-10">
-          <div className="space-y-4">
-            <p className="eyebrow">عن المؤسس</p>
-            <h1 className="flex flex-wrap items-center gap-3 text-3xl font-black text-slate-950 sm:text-4xl">
+    <div className="page-shell">
+      <section className="surface-card grid items-center gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_240px] lg:p-10">
+        <div className="relative order-1 mx-auto aspect-[4/5] w-full max-w-[220px] overflow-hidden rounded-md border border-[var(--border)] bg-[var(--surface-muted)] lg:order-2">
+          {author.image ? (
+            <CardMedia
+              src={author.image.url}
+              alt={author.name}
+              fill
+              sizes="(min-width: 1024px) 240px, 60vw"
+              priority
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center p-4 text-center text-sm font-bold text-[var(--text-muted)]">
               {author.name}
-              {author.who ? (
-                <span className="inline-flex rounded-md border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-semibold text-[var(--text-muted)]">
-                  {author.who}
-                </span>
-              ) : null}
-            </h1>
-            {author.title ? (
-              <p className="text-base font-semibold text-[var(--text-muted)]">
-                {author.title}
-              </p>
-            ) : null}
-          </div>
+            </div>
+          )}
+        </div>
 
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[190px] overflow-hidden rounded-md border border-[var(--border)] bg-[var(--surface-muted)]">
-            {author.image ? (
-              <CardMedia
-                src={author.image.url}
-                alt={author.name}
-                fill
-                sizes="(min-width: 1024px) 20vw, 60vw"
-                priority
-              />
-            ) : (
-              <div className="flex h-full items-center justify-center p-4 text-center text-sm font-bold text-[var(--text-muted)]">
-                {author.name}
-              </div>
-            )}
-          </div>
-        </section>
-
-        <Prose
-          html={author.shortBioHtml ?? `<p>${author.shortBio}</p>`}
-          className="surface-card p-6 text-right text-base leading-9 text-slate-600 sm:p-8"
-        />
-
-        {author.facebook ? (
-          <div className="flex justify-start">
+        <div className="order-2 space-y-4 text-right lg:order-1">
+          <p className="eyebrow">من آنا</p>
+          <h1 className="flex flex-wrap items-center gap-3 text-3xl font-black text-slate-950 sm:text-4xl">
+            {author.name}
+          </h1>
+          {author.title ? (
+            <p className="text-base font-semibold leading-8 text-[var(--text-muted)]">
+              {author.title}
+            </p>
+          ) : null}
+          {author.facebook ? (
             <ButtonLink
               href={author.facebook}
               variant="secondary"
@@ -94,52 +80,71 @@ export default async function AuthorPage() {
             >
               Facebook
             </ButtonLink>
-          </div>
-        ) : null}
-
-        <nav
-          aria-label="أقسام السيرة الذاتية"
-          className="surface-card flex flex-wrap gap-2 p-4"
-        >
-          {authorSections.map((section) => (
-            <a
-              key={section.id}
-              href={`#${section.id}`}
-              className="rounded-full border border-[var(--border)] px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
-            >
-              {section.title}
-            </a>
-          ))}
-        </nav>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          {authorSections.map((section) => (
-            <section
-              key={section.id}
-              id={section.id}
-              className="surface-card scroll-mt-24 p-5 sm:p-6"
-            >
-              <h2 className="mb-3 text-xl font-bold text-[var(--accent)]">
-                {section.title}
-              </h2>
-              <ul className="space-y-2 text-sm leading-7 text-[var(--text-muted)]">
-                {section.items.map((item) => (
-                  <li key={item} className="flex items-start gap-2">
-                    <span
-                      aria-hidden="true"
-                      className="mt-3 size-1.5 shrink-0 rounded-full bg-[var(--accent-cyan)]"
-                    />
-                    <span>{item}.</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
+          ) : null}
         </div>
+      </section>
+
+      <section className="section-stack">
+        <SectionHeading eyebrow="نبذة" title="عن هبة" />
+        <Prose
+          html={author.shortBioHtml ?? `<p>${author.shortBio}</p>`}
+          className="surface-card p-6 text-right text-base leading-9 text-slate-600 sm:p-8"
+        />
+      </section>
+
+      <nav aria-label="أقسام السيرة الذاتية" className="flex flex-wrap gap-2">
+        {authorSections.map((section) => (
+          <a
+            key={section.id}
+            href={`#${section.id}`}
+            className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+          >
+            {section.title}
+          </a>
+        ))}
+      </nav>
+
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {authorSections.map((section) => (
+          <section
+            key={section.id}
+            id={section.id}
+            className="surface-card scroll-mt-24 p-5 sm:p-6"
+          >
+            <h2 className="mb-3 text-xl font-bold text-[var(--accent)]">
+              {section.title}
+            </h2>
+            <ul className="space-y-2 text-sm leading-7 text-[var(--text-muted)]">
+              {section.items.map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span
+                    aria-hidden="true"
+                    className="mt-3 size-1.5 shrink-0 rounded-full bg-[var(--accent-cyan)]"
+                  />
+                  <span>{item}.</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
       </div>
-      <aside className="space-y-6">
-        <LatestArticles articles={latestArticles} />
-      </aside>
+
+      <section className="section-stack">
+        <SectionHeading
+          eyebrow="من كتاباتي"
+          title="أحدث المقالات"
+          copy="قراءات مختارة من مدونة شغبطة."
+        />
+        {latestArticles.length ? (
+          <CardGrid columns={3}>
+            {latestArticles.map((article, index) => (
+              <ArticleCard key={article.id} article={article} priority={index === 0} />
+            ))}
+          </CardGrid>
+        ) : (
+          <EmptyState>لا توجد مقالات منشورة حاليًا.</EmptyState>
+        )}
+      </section>
     </div>
   )
 }

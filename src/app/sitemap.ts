@@ -33,7 +33,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const articles = await getSitemapArticles()
   const categoryCounts = new Map<string, number>()
-  console.log(categoryCounts)
   for (const article of articles) {
     categoryCounts.set(article.category, (categoryCounts.get(article.category) ?? 0) + 1)
   }

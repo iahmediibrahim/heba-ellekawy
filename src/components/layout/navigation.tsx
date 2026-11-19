@@ -159,15 +159,14 @@ function GroupDropdown({
 
 export function Navigation() {
   const pathname = usePathname()
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [openGroup, setOpenGroup] = useState<string | null>(null)
-  const [lastPath, setLastPath] = useState(pathname)
+  const [menuOpenForPath, setMenuOpenForPath] = useState<string | null>(null)
+  const [openGroupState, setOpenGroupState] = useState<{
+    path: string
+    label: string
+  } | null>(null)
 
-  if (lastPath !== pathname) {
-    setLastPath(pathname)
-    setMenuOpen(false)
-    setOpenGroup(null)
-  }
+  const menuOpen = menuOpenForPath === pathname
+  const openGroup = openGroupState?.path === pathname ? openGroupState.label : null
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : ""
@@ -176,6 +175,14 @@ export function Navigation() {
       document.body.style.overflow = ""
     }
   }, [menuOpen])
+
+  function setMenuOpen(open: boolean) {
+    setMenuOpenForPath(open ? pathname : null)
+  }
+
+  function setOpenGroup(label: string | null) {
+    setOpenGroupState(label ? { path: pathname, label } : null)
+  }
 
   return (
     <>
@@ -212,7 +219,7 @@ export function Navigation() {
                   group={group}
                   pathname={pathname}
                   open={openGroup === group.label}
-                  onOpenChange={(next) => setOpenGroup(() => (next ? group.label : null))}
+                  onOpenChange={(next) => setOpenGroup(next ? group.label : null)}
                 />
               ),
             )}
@@ -226,7 +233,7 @@ export function Navigation() {
 
           <button
             type="button"
-            onClick={() => setMenuOpen((current) => !current)}
+            onClick={() => setMenuOpen(!menuOpen)}
             className="order-1 inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-[var(--surface)] p-3 text-[var(--accent)] lg:hidden"
             aria-label={menuOpen ? "إغلاق القائمة" : "فتح القائمة"}
             aria-expanded={menuOpen}
@@ -299,11 +306,7 @@ export function Navigation() {
                         type="button"
                         aria-expanded={expanded}
                         aria-label={`${expanded ? "إغلاق" : "فتح"} قائمة ${group.label}`}
-                        onClick={() =>
-                          setOpenGroup((current) =>
-                            current === group.label ? null : group.label,
-                          )
-                        }
+                        onClick={() => setOpenGroup(expanded ? null : group.label)}
                         className={`inline-flex size-8 items-center justify-center rounded-md bg-[var(--surface-muted)] text-[var(--accent)] transition ${
                           expanded ? "rotate-180" : ""
                         }`}

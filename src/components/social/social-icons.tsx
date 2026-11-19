@@ -65,7 +65,7 @@ export function SocialIcons({
           <Link
             href={item.href!}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             aria-label={item.label}
             className={`inline-flex size-9 items-center justify-center rounded-md border transition ${baseClassName} ${item.className}`}
           >
@@ -78,7 +78,7 @@ export function SocialIcons({
           <Link
             href={about.askfm}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             aria-label="Ask.fm"
             className={`inline-flex h-9 items-center justify-center rounded-md border px-3 text-xs font-bold transition ${
               variant === "on-brand"
