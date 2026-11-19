@@ -6,12 +6,14 @@ const categoryTitles: Record<ArticleCategory, string> = {
   "thoughts-and-tips": "خواطر ونصائح نفسية",
   "family-and-educational": "مقالات عن العلاقات والتربية",
   psychological: "مقالات نفسية",
+  psychotherapy: "العلاج النفسي",
   "nominations-for-books-movies-and-novels": "ترشيحات الكتب والأفلام والروايات",
   other: "خواطر ومقالات عامة",
   "english-articles": "English Articles",
   "my-journey-with-writing": "رحلتي مع الكتابة",
   "me-and-places": "أنا والأماكن",
   "short-story": "قصص مصورة",
+  "short-films": "عن الأفلام القصيرة",
   "opinion-articles-and-problems-mail": "بريد المشكلات",
 }
 

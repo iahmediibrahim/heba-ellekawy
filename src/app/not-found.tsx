@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const suggestions = [
   { label: "الرئيسية", href: "/", icon: Home },
   { label: "فضاءات", href: "/blog", icon: PenLine },
-  { label: "القصص القصيرة", href: "/stories", icon: Compass },
+  { label: "القصص القصيرة", href: "/novels-books#short-stories", icon: Compass },
   { label: "تواصلي معنا", href: "/contact", icon: ArrowUpLeft },
 ]
 

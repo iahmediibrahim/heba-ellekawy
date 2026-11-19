@@ -1,5 +1,4 @@
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer"
-import { cache } from "react"
 import {
   createClient,
   type Asset,
@@ -8,6 +7,7 @@ import {
   type EntrySkeletonType,
 } from "contentful"
 import kebabCase from "lodash/kebabCase"
+import { cache } from "react"
 
 import { CATEGORY_ARTICLES_PER_PAGE } from "@/lib/articles"
 import { brand, siteDescription, siteTitle } from "@/lib/brand"
@@ -64,7 +64,7 @@ const fallbackAbout: AboutData = {
       id: "service-1",
       name: "الاستشارات النفسية",
       icon: {
-        url: "/brand/symbol.jpeg",
+        url: "/brand/symbol.png",
         width: 460,
         height: 460,
         title: "Service",
@@ -74,7 +74,7 @@ const fallbackAbout: AboutData = {
       id: "service-2",
       name: "ورش الكتابة",
       icon: {
-        url: "/brand/symbol.jpeg",
+        url: "/brand/symbol.png",
         width: 460,
         height: 460,
         title: "Service",
@@ -84,7 +84,7 @@ const fallbackAbout: AboutData = {
       id: "service-3",
       name: "برامج التوعية",
       icon: {
-        url: "/brand/symbol.jpeg",
+        url: "/brand/symbol.png",
         width: 460,
         height: 460,
         title: "Service",
@@ -94,7 +94,7 @@ const fallbackAbout: AboutData = {
       id: "service-4",
       name: "جلسات الحجز والمتابعة",
       icon: {
-        url: "/brand/symbol.jpeg",
+        url: "/brand/symbol.png",
         width: 460,
         height: 460,
         title: "Service",
@@ -147,7 +147,7 @@ const fallbackStories: Story[] = [
     pdfUrl: "#",
     pdfFileName: "story.pdf",
     heroImage: {
-      url: "/brand/symbol.jpeg",
+      url: "/brand/symbol.png",
       width: 460,
       height: 460,
       title: "Story",
@@ -167,7 +167,7 @@ const fallbackNovels: Novel[] = [
     pdfFileName: "novel.pdf",
     inShop: false,
     heroImage: {
-      url: "/brand/logo.jpeg",
+      url: "/brand/logo.png",
       width: 1774,
       height: 887,
       title: "Novel",

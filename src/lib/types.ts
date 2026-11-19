@@ -2,12 +2,14 @@ export const ARTICLE_CATEGORIES = [
   "thoughts-and-tips",
   "family-and-educational",
   "psychological",
+  "psychotherapy",
   "nominations-for-books-movies-and-novels",
   "other",
   "english-articles",
   "my-journey-with-writing",
   "me-and-places",
   "short-story",
+  "short-films",
   "opinion-articles-and-problems-mail",
 ] as const
 

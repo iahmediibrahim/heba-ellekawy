@@ -12,7 +12,7 @@ export function HomeFounder({
   return (
     <section className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
       <div className="surface-card p-6 text-right lg:p-8">
-        <p className="eyebrow">عن المؤسس</p>
+        {/* <p className="eyebrow">عن المؤسس</p> */}
         <h2 className="mt-2 text-3xl font-black text-slate-950">
           {author?.name ?? "د. هبة اللكاوي"}
         </h2>
@@ -26,7 +26,7 @@ export function HomeFounder({
         ) : null}
         <div className="mt-6 flex flex-wrap justify-end gap-3">
           <ButtonLink href="/author" variant="primary">
-            السيرة الكاملة
+            المزيد عنّي
           </ButtonLink>
         </div>
       </div>

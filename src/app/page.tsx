@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
 
+import { HomeHero } from "@/components/sections/home/home-hero"
 import { HomeCta } from "@/components/sections/home/home-cta"
 import { HomeFounder } from "@/components/sections/home/home-founder"
 import { getHomePageData } from "@/lib/contentful"
+import { truncateText } from "@/lib/format"
 import { buildMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = buildMetadata({
@@ -12,16 +14,15 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function Home() {
   const data = await getHomePageData()
-  const heroImage = data.about.image ?? data.featuredAuthor?.image
 
   return (
     <div className="page-shell">
-      {/* <HomeHero
+      <HomeHero
         title="مساحة عربية حديثة للقراءة النفسية والأدبية"
         description={truncateText(data.about.description, 220)}
-        imageUrl={heroImage?.url}
-        imageAlt={heroImage?.title ?? "د. هبة اللكاوي"}
-      /> */}
+        imageUrl="/brand/banner.png"
+        imageAlt="لوحات فنية ترمز إلى النفس والقراءة والكتابة"
+      />
 
       {/* <HomeFeatured
         heroArticle={data.featuredArticles[0]}

@@ -284,7 +284,7 @@ export default async function ArticleEntryPage({
               url: site.siteUrl,
               logo: {
                 "@type": "ImageObject",
-                url: `${site.siteUrl}/brand/logo.jpeg`,
+                url: `${site.siteUrl}/brand/logo.png`,
               },
             },
             articleSection: getCategoryTitle(category),

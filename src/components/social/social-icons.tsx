@@ -1,5 +1,5 @@
-import { Facebook, Instagram, MessageCircleMore, Music4 } from "lucide-react"
 import Link from "next/link"
+import { FaFacebookF, FaInstagram, FaSoundcloud, FaWhatsapp } from "react-icons/fa6"
 
 import type { AboutData } from "@/lib/types"
 
@@ -25,25 +25,25 @@ export function SocialIcons({
     {
       href: about.facebook,
       label: "Facebook",
-      icon: <Facebook className="size-4" />,
+      icon: <FaFacebookF className="size-4" aria-hidden="true" />,
       className: "hover:border-[#1877f2] hover:text-[#1877f2]",
     },
     {
       href: about.instagram,
       label: "Instagram",
-      icon: <Instagram className="size-4" />,
+      icon: <FaInstagram className="size-4" aria-hidden="true" />,
       className: "hover:border-[#e1306c] hover:text-[#e1306c]",
     },
     {
       href: whatsapp ? `https://wa.me/${whatsapp}` : undefined,
       label: "WhatsApp",
-      icon: <MessageCircleMore className="size-4" />,
+      icon: <FaWhatsapp className="size-4" aria-hidden="true" />,
       className: "hover:border-[#25d366] hover:text-[#25d366]",
     },
     {
       href: about.soundcloud,
       label: "SoundCloud",
-      icon: <Music4 className="size-4" />,
+      icon: <FaSoundcloud className="size-4" aria-hidden="true" />,
       className: "hover:border-[#ff5500] hover:text-[#ff5500]",
     },
   ].filter((item) => item.href)

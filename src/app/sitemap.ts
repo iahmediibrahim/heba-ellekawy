@@ -15,7 +15,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: "/", priority: 1 },
     { path: "/blog", priority: 0.9 },
     { path: "/author", priority: 0.6 },
-    { path: "/stories", priority: 0.7 },
     { path: "/novels-books", priority: 0.7 },
     { path: "/contact", priority: 0.8 },
   ].map((route) => ({
@@ -34,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const articles = await getSitemapArticles()
   const categoryCounts = new Map<string, number>()
-
+  console.log(categoryCounts)
   for (const article of articles) {
     categoryCounts.set(article.category, (categoryCounts.get(article.category) ?? 0) + 1)
   }

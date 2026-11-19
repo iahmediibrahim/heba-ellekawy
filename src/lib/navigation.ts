@@ -28,6 +28,7 @@ export const blogSections: NavigationSection[] = [
         href: "/articles/family-and-educational",
       },
       { label: "مقالات نفسية", href: "/articles/psychological" },
+      { label: "العلاج النفسي", href: "/articles/psychotherapy" },
       {
         label: "بريد المشكلات",
         href: "/articles/opinion-articles-and-problems-mail",
@@ -45,11 +46,17 @@ export const blogSections: NavigationSection[] = [
       { label: "أنا والأماكن", href: "/articles/me-and-places" },
       { label: "رحلتي مع الكتابة", href: "/articles/my-journey-with-writing" },
       { label: "قصص مصورة", href: "/articles/short-story" },
+      { label: "عن الأفلام القصيرة", href: "/articles/short-films" },
       { label: "English Articles", href: "/articles/english-articles" },
-      { label: "القصص القصيرة", href: "/stories" },
-      { label: "الروايات والكتب", href: "/novels-books" },
     ],
   },
+]
+
+const spaceLinks: NavigationLink[] = [
+  { label: "مدونة شغبطة", href: "/blog" },
+  { label: "العلاج النفسي", href: "/articles/psychotherapy" },
+  { label: "الروايات والكتب", href: "/novels-books" },
+  { label: "عن الأفلام القصيرة", href: "/articles/short-films" },
 ]
 
 export const navigationGroups: NavigationGroup[] = [
@@ -57,8 +64,7 @@ export const navigationGroups: NavigationGroup[] = [
   { label: "عن المؤسس", href: "/author" },
   {
     label: "فضاءات",
-    href: "/blog",
-    sections: blogSections,
+    items: spaceLinks,
   },
 ]
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Facebook } from "lucide-react"
+import { FaFacebookF } from "react-icons/fa6"
 
 import { LatestArticles } from "@/components/articles/latest-articles"
 import { ButtonLink } from "@/components/ui/button"
@@ -88,7 +88,7 @@ export default async function AuthorPage() {
               variant="secondary"
               external
               className="bg-[#1877f2]/10 text-[#1877f2]"
-              icon={<Facebook className="size-4" />}
+              icon={<FaFacebookF className="size-4" aria-hidden="true" />}
             >
               Facebook
             </ButtonLink>

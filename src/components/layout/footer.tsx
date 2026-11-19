@@ -49,8 +49,8 @@ export function Footer({ about }: { about: AboutData }) {
                 href={`tel:${primaryPhone}`}
                 className="inline-flex items-center gap-2 transition hover:text-[var(--accent)]"
               >
-                <Phone className="size-4" />
                 <span dir="ltr">{primaryPhone}</span>
+                <Phone className="size-4" />
               </a>
             ) : null}
             {about.mail ? (

@@ -1,10 +1,10 @@
 import {
-  Facebook,
-  Linkedin,
-  MessageCircleMore,
-  MessagesSquare,
-  Twitter,
-} from "lucide-react"
+  FaFacebookF,
+  FaLinkedinIn,
+  FaRedditAlien,
+  FaWhatsapp,
+  FaXTwitter,
+} from "react-icons/fa6"
 
 export function ShareButtons({ url, title }: { url: string; title: string }) {
   const sharedClassName = "secondary-button px-4 py-3 text-sm"
@@ -14,27 +14,27 @@ export function ShareButtons({ url, title }: { url: string; title: string }) {
     {
       label: "Facebook",
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      icon: <Facebook className="size-4" aria-hidden="true" />,
+      icon: <FaFacebookF className="size-4" aria-hidden="true" />,
     },
     {
       label: "Twitter",
       href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
-      icon: <Twitter className="size-4" aria-hidden="true" />,
+      icon: <FaXTwitter className="size-4" aria-hidden="true" />,
     },
     {
       label: "LinkedIn",
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      icon: <Linkedin className="size-4" aria-hidden="true" />,
+      icon: <FaLinkedinIn className="size-4" aria-hidden="true" />,
     },
     {
       label: "Reddit",
       href: `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
-      icon: <MessagesSquare className="size-4" aria-hidden="true" />,
+      icon: <FaRedditAlien className="size-4" aria-hidden="true" />,
     },
     {
       label: "WhatsApp",
       href: `https://wa.me/?text=${encodeURIComponent(`${title} ${url}`)}`,
-      icon: <MessageCircleMore className="size-4" aria-hidden="true" />,
+      icon: <FaWhatsapp className="size-4" aria-hidden="true" />,
     },
   ]
 

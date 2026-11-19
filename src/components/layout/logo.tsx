@@ -12,25 +12,25 @@ type LogoConfig = {
 
 const logoAssets: Record<LogoVariant, LogoConfig> = {
   mark: {
-    src: "/brand/symbol.jpeg",
+    src: "/brand/symbol.png",
     width: 460,
     height: 460,
     alt: "شعار د. هبة اللكاوي",
   },
   horizontal: {
-    src: "/brand/logo.jpeg",
+    src: "/brand/logo.png",
     width: 1774,
     height: 887,
     alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
   },
   stacked: {
-    src: "/brand/logo.jpeg",
+    src: "/brand/logo.png",
     width: 1774,
     height: 887,
     alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
   },
   wordmark: {
-    src: "/brand/logo.jpeg",
+    src: "/brand/logo.png",
     width: 1774,
     height: 887,
     alt: "د. هبة اللكاوي - طبيبة الطب النفسي والعلاج النفسي",
@@ -65,9 +65,7 @@ export function BrandLogo({
         width={config.width}
         height={config.height}
         sizes={sizes}
-        className={
-          variant === "mark" ? "h-auto w-full" : "h-16 w-full object-cover"
-        }
+        className={variant === "mark" ? "h-auto w-full" : "h-16 w-full object-cover"}
       />
     </Link>
   )

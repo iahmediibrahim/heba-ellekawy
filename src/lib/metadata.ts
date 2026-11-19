@@ -5,7 +5,7 @@ import { getSiteUrl } from "@/lib/site-url"
 import type { SeoImage } from "@/lib/types"
 
 const DEFAULT_OG_IMAGE = {
-  src: "/brand/logo.jpeg",
+  src: "/brand/logo.png",
   width: 1774,
   height: 887,
 }
