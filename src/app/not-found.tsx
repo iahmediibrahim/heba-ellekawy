@@ -1,6 +1,6 @@
-import { ArrowUpLeft, Compass, Home, PenLine } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
+import { LuArrowUpLeft, LuCompass, LuHouse, LuPenLine } from "react-icons/lu"
 
 import { BrandLogo } from "@/components/layout/logo"
 import { ButtonLink } from "@/components/ui/button"
@@ -12,41 +12,47 @@ export const metadata: Metadata = {
 }
 
 const suggestions = [
-  { label: "الرئيسية", href: "/", icon: Home },
-  { label: "فضاءات", href: "/blog", icon: PenLine },
-  { label: "القصص القصيرة", href: "/novels-books#short-stories", icon: Compass },
-  { label: "تواصلي معنا", href: "/contact", icon: ArrowUpLeft },
+  { label: "الرئيسية", href: "/", icon: LuHouse },
+  { label: "فضاءات", href: "/blog", icon: LuPenLine },
+  { label: "القصص القصيرة", href: "/novels-books#short-stories", icon: LuCompass },
+  { label: "تواصلي معنا", href: "/contact", icon: LuArrowUpLeft },
 ]
 
 export default function NotFound() {
   return (
     <div className="page-shell">
-      <section className="brand-panel flex flex-col items-center gap-6 rounded-[2rem] px-6 py-14 text-center">
+      <section className="surface-card flex flex-col items-center gap-6 px-6 py-14 text-center">
         <BrandLogo
           variant="mark"
           className="w-20 rounded-2xl bg-white p-2"
           sizes="80px"
         />
 
-        <p className="text-sm font-bold uppercase tracking-[0.3em] text-white/70">404</p>
+        <p className="text-sm font-bold uppercase tracking-[0.3em] text-[var(--text-muted)]">
+          404
+        </p>
 
-        <h1 className="text-3xl font-black leading-[1.5] text-white sm:text-4xl">
+        <h1 className="text-3xl font-black leading-[1.5] text-slate-950 sm:text-4xl">
           الصفحة اللي بتدور عليها مش موجودة
         </h1>
 
-        <p className="max-w-xl text-base leading-9 text-white/85">
+        <p className="max-w-xl text-base leading-9 text-[var(--text-muted)]">
           يمكن يكون الرابط قديم أو اتغيّر. جرّب تتصفح الأقسام من تحت، أو ارجع للصفحة
           الرئيسية.
         </p>
 
         <div className="flex flex-wrap justify-center gap-3 pt-2">
-          <ButtonLink href="/" variant="onBrandFlat" icon={<Home className="size-4" />}>
+          <ButtonLink
+            href="/"
+            variant="onBrandFlat"
+            icon={<LuHouse className="size-4" />}
+          >
             الصفحة الرئيسية
           </ButtonLink>
           <ButtonLink
             href="/blog"
-            variant="outlineOnBrand"
-            icon={<PenLine className="size-4" />}
+            variant="secondary"
+            icon={<LuPenLine className="size-4" />}
           >
             فضاءات
           </ButtonLink>

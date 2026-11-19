@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react"
+import { LuMessageCircle } from "react-icons/lu"
 
 export function MessengerChat() {
   return (
@@ -10,7 +10,7 @@ export function MessengerChat() {
       title="تواصل عبر ماسنجر"
       className="primary-button fixed bottom-5 right-5 z-40 inline-flex size-12 items-center justify-center rounded-full p-0! sm:bottom-6 sm:right-6"
     >
-      <MessageCircle className="size-6" aria-hidden="true" />
+      <LuMessageCircle className="size-6" aria-hidden="true" />
     </a>
   )
 }

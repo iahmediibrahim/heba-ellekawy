@@ -67,7 +67,7 @@ export function SocialIcons({
             target="_blank"
             rel="noreferrer"
             aria-label={item.label}
-            className={`inline-flex size-9 items-center justify-center rounded-full border transition ${baseClassName} ${item.className}`}
+            className={`inline-flex size-9 items-center justify-center rounded-md border transition ${baseClassName} ${item.className}`}
           >
             {item.icon}
           </Link>
@@ -80,7 +80,7 @@ export function SocialIcons({
             target="_blank"
             rel="noreferrer"
             aria-label="Ask.fm"
-            className={`inline-flex h-9 items-center justify-center rounded-full border px-3 text-xs font-bold transition ${
+            className={`inline-flex h-9 items-center justify-center rounded-md border px-3 text-xs font-bold transition ${
               variant === "on-brand"
                 ? "border-white/25 text-white/85 hover:border-white hover:text-white"
                 : "border-[var(--border)] text-slate-500 hover:border-[var(--accent)] hover:text-[var(--accent)]"

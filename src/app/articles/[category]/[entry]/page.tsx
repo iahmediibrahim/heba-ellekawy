@@ -1,8 +1,8 @@
-import { ArrowLeft, ArrowRight } from "lucide-react"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { LuArrowLeft, LuArrowRight } from "react-icons/lu"
 
 import { ArticleCard } from "@/components/articles/article-card"
 import { ArticleMeta } from "@/components/articles/article-meta"
@@ -202,15 +202,15 @@ export default async function ArticleEntryPage({
           />
         </div>
         <header
-          className={`brand-panel space-y-4 rounded-[var(--radius-card)] p-6 sm:p-8 ${
+          className={`surface-card space-y-4 p-6 sm:p-8 ${
             isEnglish ? "text-left" : "text-right"
           }`}
         >
-          <p className="brand-eyebrow">{getCategoryTitle(category)}</p>
-          <h1 className="text-3xl font-black leading-tight text-white sm:text-4xl">
+          <p className="eyebrow">{getCategoryTitle(category)}</p>
+          <h1 className="text-3xl font-black leading-tight text-slate-950 sm:text-4xl">
             {post.title}
             {post.source ? (
-              <span className="mr-3 mt-2 inline-flex rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+              <span className="mr-3 mt-2 inline-flex rounded-md border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-semibold text-[var(--text-muted)]">
                 {post.source}
               </span>
             ) : null}
@@ -218,7 +218,6 @@ export default async function ArticleEntryPage({
           <ArticleMeta
             article={post}
             className={isEnglish ? "text-left" : "text-right"}
-            tone="on-brand"
           />
         </header>
 
@@ -255,9 +254,9 @@ export default async function ArticleEntryPage({
         <div className={isEnglish ? "text-left" : "text-right"}>
           <Link href={`/articles/${post.category}`} className="primary-button">
             {isEnglish ? (
-              <ArrowLeft className="size-4" />
+              <LuArrowLeft className="size-4" />
             ) : (
-              <ArrowRight className="size-4" />
+              <LuArrowRight className="size-4" />
             )}
             {isEnglish ? "Back To Articles" : "الرجوع للمقالات"}
           </Link>

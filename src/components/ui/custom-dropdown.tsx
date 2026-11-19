@@ -1,7 +1,7 @@
 "use client"
 
-import { ChevronDown } from "lucide-react"
 import { useEffect, useId, useRef, useState } from "react"
+import { LuChevronDown } from "react-icons/lu"
 
 export type CustomDropdownOption = {
   label: string
@@ -142,7 +142,7 @@ export function CustomDropdown({
         className="input-field flex items-center justify-between gap-3 text-right"
       >
         <span id={`${id}-value`}>{selectedOption?.label ?? label}</span>
-        <ChevronDown
+        <LuChevronDown
           aria-hidden="true"
           className={`size-4 shrink-0 text-[var(--text-muted)] transition ${
             isOpen ? "rotate-180" : ""

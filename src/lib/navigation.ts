@@ -52,7 +52,7 @@ export const blogSections: NavigationSection[] = [
   },
 ]
 
-const spaceLinks: NavigationLink[] = [
+export const spaceLinks: NavigationLink[] = [
   { label: "مدونة شغبطة", href: "/blog" },
   { label: "العلاج النفسي", href: "/articles/psychotherapy" },
   { label: "الروايات والكتب", href: "/novels-books" },

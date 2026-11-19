@@ -1,5 +1,5 @@
-import { BookOpen, Download } from "lucide-react"
 import Image from "next/image"
+import { LuBookOpen, LuDownload } from "react-icons/lu"
 
 import { ButtonLink } from "@/components/ui/button"
 import { Prose } from "@/components/ui/prose"
@@ -29,8 +29,8 @@ export function NovelCard({
             className="object-contain p-4 transition duration-500 group-hover:scale-[1.03]"
           />
         ) : (
-          <div className="brand-panel flex h-full w-full items-center justify-center">
-            <BookOpen className="size-10 text-white/90" />
+          <div className="flex h-full w-full items-center justify-center bg-[var(--surface-muted)]">
+            <LuBookOpen className="size-10 text-[var(--text-muted)]" />
           </div>
         )}
       </div>
@@ -69,7 +69,7 @@ export function NovelCard({
             <ButtonLink
               href={novel.pdfUrl}
               variant="primary"
-              icon={<Download className="size-4" />}
+              icon={<LuDownload className="size-4" />}
             >
               تحميل الرواية
             </ButtonLink>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { BookOpen, Download } from "lucide-react"
+import { LuBookOpen, LuDownload } from "react-icons/lu"
 
 import { ButtonLink } from "@/components/ui/button"
 import { NovelCard } from "@/components/novels/novel-card"
@@ -101,8 +101,8 @@ export default async function NovelsBooksPage() {
                           className="transition duration-500 group-hover:scale-[1.04]"
                         />
                       ) : (
-                        <div className="brand-panel flex h-full items-center justify-center">
-                          <BookOpen className="size-10 text-white/90" />
+                        <div className="flex h-full items-center justify-center bg-[var(--surface-muted)]">
+                          <LuBookOpen className="size-10 text-[var(--text-muted)]" />
                         </div>
                       )}
                       <div
@@ -138,7 +138,7 @@ export default async function NovelsBooksPage() {
                           <ButtonLink
                             href={story.pdfUrl}
                             variant="primary"
-                            icon={<Download className="size-4" />}
+                            icon={<LuDownload className="size-4" />}
                           >
                             تحميل القصة
                           </ButtonLink>

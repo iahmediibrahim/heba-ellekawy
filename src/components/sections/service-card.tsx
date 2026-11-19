@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Brain } from "lucide-react"
+import { LuBrain } from "react-icons/lu"
 
 import type { Service } from "@/lib/types"
 
@@ -18,7 +18,7 @@ export function ServiceCard({ service }: { service: Service }) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-[var(--brand-gradient)]">
-            <Brain className="size-10 text-white/90" />
+            <LuBrain className="size-10 text-white/90" />
           </div>
         )}
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/45 to-transparent" />

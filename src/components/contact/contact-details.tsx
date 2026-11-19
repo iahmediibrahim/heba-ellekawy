@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Mail, MapPin, MessageCircle, Phone } from "lucide-react"
+import { LuMail, LuMapPin, LuMessageCircle, LuPhone } from "react-icons/lu"
 
 import { SocialIcons } from "@/components/social/social-icons"
 import type { AboutData } from "@/lib/types"
@@ -17,7 +17,7 @@ export function ContactDetails({ about }: { about: AboutData }) {
             label: "البريد الإلكتروني",
             value: about.mail,
             href: `mailto:${about.mail}`,
-            icon: Mail,
+            icon: LuMail,
             direction: "ltr" as const,
             external: false,
           },
@@ -27,7 +27,7 @@ export function ContactDetails({ about }: { about: AboutData }) {
       label: "هاتف",
       value: phone,
       href: `tel:${phone}`,
-      icon: Phone,
+      icon: LuPhone,
       direction: "ltr" as const,
       external: false,
     })),
@@ -35,7 +35,7 @@ export function ContactDetails({ about }: { about: AboutData }) {
       label: "واتساب",
       value: whatsapp,
       href: `https://wa.me/${whatsapp.replace(/\D/g, "")}`,
-      icon: MessageCircle,
+      icon: LuMessageCircle,
       direction: "ltr" as const,
       external: true,
     })),
@@ -43,7 +43,7 @@ export function ContactDetails({ about }: { about: AboutData }) {
       label: "الموقع",
       value: "عرض الموقع على الخريطة ↗",
       href: "https://maps.google.com/?q=30.7970362,31.0030537",
-      icon: MapPin,
+      icon: LuMapPin,
       direction: "rtl" as const,
       external: true,
     },
@@ -52,10 +52,10 @@ export function ContactDetails({ about }: { about: AboutData }) {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted)]">
           تواصل مباشر
         </p>
-        <h2 className="text-xl font-bold text-white">وسائل الاتصال</h2>
+        <h2 className="text-xl font-bold text-slate-900">وسائل الاتصال</h2>
       </div>
 
       <dl className="space-y-5">
@@ -69,18 +69,20 @@ export function ContactDetails({ about }: { about: AboutData }) {
             >
               <span
                 aria-hidden="true"
-                className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white"
+                className="flex size-10 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--surface)] text-[var(--accent)]"
               >
                 <Icon className="size-4" />
               </span>
               <div className="min-w-0">
-                <dt className="mb-1 text-xs font-medium text-white/70">{method.label}</dt>
+                <dt className="mb-1 text-xs font-medium text-[var(--text-muted)]">
+                  {method.label}
+                </dt>
                 <dd className="min-w-0 text-left" dir={method.direction}>
                   <Link
                     href={method.href}
                     target={method.external ? "_blank" : undefined}
                     rel={method.external ? "noreferrer" : undefined}
-                    className="break-all text-sm font-semibold text-white transition hover:text-white/75 sm:text-base"
+                    className="break-all text-sm font-semibold text-slate-800 transition hover:text-[var(--accent)] sm:text-base"
                   >
                     {method.value}
                   </Link>
@@ -93,9 +95,9 @@ export function ContactDetails({ about }: { about: AboutData }) {
 
       <SocialIcons
         about={about}
-        variant="on-brand"
+        variant="default"
         label="منصات التواصل الاجتماعي"
-        className="border-t border-white/20 pt-5"
+        className="border-t border-[var(--border)] pt-5"
       />
     </div>
   )

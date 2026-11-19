@@ -14,11 +14,11 @@ const variantClasses: Record<ButtonVariant, string> = {
   primary: "primary-button",
   secondary: "secondary-button",
   onBrand:
-    "inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-[var(--accent-strong)] shadow-lg transition hover:-translate-y-0.5",
+    "inline-flex items-center justify-center gap-2 rounded-md bg-white px-6 py-3 text-sm font-bold text-[var(--accent-strong)] transition hover:bg-[var(--surface-muted)]",
   onBrandFlat:
-    "inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-bold text-[var(--accent-strong)] transition hover:-translate-y-0.5",
+    "inline-flex items-center justify-center rounded-md bg-white px-6 py-3 text-sm font-bold text-[var(--accent-strong)] transition hover:bg-[var(--surface-muted)]",
   outlineOnBrand:
-    "inline-flex items-center justify-center gap-2 rounded-full border border-white/45 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/15",
+    "inline-flex items-center justify-center gap-2 rounded-md border border-white/45 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/15",
 }
 
 const sizeClasses: Record<ButtonSize, string> = {

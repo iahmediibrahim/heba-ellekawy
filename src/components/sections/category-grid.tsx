@@ -1,5 +1,5 @@
-import { ArrowUpLeft, Brain, Globe2 } from "lucide-react"
 import Link from "next/link"
+import { LuArrowUpLeft, LuBrain, LuGlobe } from "react-icons/lu"
 
 import { blogSections } from "@/lib/navigation"
 
@@ -13,9 +13,9 @@ export function CategoryGrid({ headingLevel = 3 }: { headingLevel?: 2 | 3 }) {
           <div className="mb-4 flex items-center gap-3">
             <span className="flex size-11 items-center justify-center rounded-2xl bg-[var(--accent-soft)] text-[var(--accent)]">
               {section.title.includes("نفسية") ? (
-                <Brain className="size-5" />
+                <LuBrain className="size-5" />
               ) : (
-                <Globe2 className="size-5" />
+                <LuGlobe className="size-5" />
               )}
             </span>
             <Heading className="text-xl font-bold text-slate-900">
@@ -30,7 +30,7 @@ export function CategoryGrid({ headingLevel = 3 }: { headingLevel?: 2 | 3 }) {
                   className="surface-muted flex items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-[var(--border-strong)] hover:text-[var(--accent)]"
                 >
                   <span>{item.label}</span>
-                  <ArrowUpLeft className="size-4 shrink-0 text-[var(--accent-cyan)]" />
+                  <LuArrowUpLeft className="size-4 shrink-0 text-[var(--accent-cyan)]" />
                 </Link>
               </li>
             ))}

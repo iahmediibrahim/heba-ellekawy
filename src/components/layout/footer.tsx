@@ -1,5 +1,5 @@
-import { Heart, Mail, Phone } from "lucide-react"
 import Link from "next/link"
+import { LuHeart, LuMail, LuPhone } from "react-icons/lu"
 
 import { BrandLogo } from "@/components/layout/logo"
 import { SocialIcons } from "@/components/social/social-icons"
@@ -14,7 +14,7 @@ export function Footer({ about }: { about: AboutData }) {
     .map((group) => ({ label: group.label!, href: group.href! }))
 
   return (
-    <footer className="mt-6 border-t border-[var(--border)] bg-white px-5 pb-6 pt-10 sm:px-8">
+    <footer className="mt-6 border-t border-[var(--border)] bg-[var(--surface)] px-5 pb-6 pt-10 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <BrandLogo
@@ -50,7 +50,7 @@ export function Footer({ about }: { about: AboutData }) {
                 className="inline-flex items-center gap-2 transition hover:text-[var(--accent)]"
               >
                 <span dir="ltr">{primaryPhone}</span>
-                <Phone className="size-4" />
+                <LuPhone className="size-4" />
               </a>
             ) : null}
             {about.mail ? (
@@ -59,7 +59,7 @@ export function Footer({ about }: { about: AboutData }) {
                 className="inline-flex items-center gap-2 transition hover:text-[var(--accent)]"
                 dir="ltr"
               >
-                <Mail className="size-4" />
+                <LuMail className="size-4" />
                 {about.mail}
               </a>
             ) : null}
@@ -73,7 +73,7 @@ export function Footer({ about }: { about: AboutData }) {
             <span>© {new Date().getFullYear()}</span>
             <span aria-hidden="true">·</span>
             <span>built with</span>
-            <Heart className="size-4 " />
+            <LuHeart className="size-4 " />
             <Link
               href="https://ahmediibrahim.vercel.app/"
               target="_blank"

@@ -1,7 +1,7 @@
-import { Search } from "lucide-react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { LuSearch } from "react-icons/lu"
 
 import { ArticleCard } from "@/components/articles/article-card"
 import { CategoryGrid } from "@/components/sections/category-grid"
@@ -130,7 +130,7 @@ export default async function BlogPage({
               type="submit"
               className="primary-button inline-flex items-center justify-center gap-2"
             >
-              <Search className="size-4" aria-hidden="true" />
+              <LuSearch className="size-4" aria-hidden="true" />
               بحث
             </button>
             {hasFilters ? (

@@ -43,23 +43,25 @@ export default async function AuthorPage() {
   return (
     <div className="page-shell page-shell--grid lg:grid-cols-[1.35fr_0.65fr]">
       <div className="space-y-6">
-        <section className="brand-panel grid gap-6 rounded-[var(--radius-card)] p-6 sm:p-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(150px,0.7fr)] lg:p-10">
+        <section className="surface-card grid gap-6 p-6 sm:p-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(150px,0.7fr)] lg:p-10">
           <div className="space-y-4">
-            <p className="brand-eyebrow">عن المؤسس</p>
-            <h1 className="flex flex-wrap items-center gap-3 text-3xl font-black text-white sm:text-4xl">
+            <p className="eyebrow">عن المؤسس</p>
+            <h1 className="flex flex-wrap items-center gap-3 text-3xl font-black text-slate-950 sm:text-4xl">
               {author.name}
               {author.who ? (
-                <span className="inline-flex rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+                <span className="inline-flex rounded-md border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-2 text-sm font-semibold text-[var(--text-muted)]">
                   {author.who}
                 </span>
               ) : null}
             </h1>
             {author.title ? (
-              <p className="text-base font-semibold text-white/80">{author.title}</p>
+              <p className="text-base font-semibold text-[var(--text-muted)]">
+                {author.title}
+              </p>
             ) : null}
           </div>
 
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[190px] overflow-hidden rounded-3xl border border-white/25 bg-[var(--surface-muted)]">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-[190px] overflow-hidden rounded-md border border-[var(--border)] bg-[var(--surface-muted)]">
             {author.image ? (
               <CardMedia
                 src={author.image.url}

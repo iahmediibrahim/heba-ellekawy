@@ -26,16 +26,18 @@ export function PageHeader({
         </div>
       ) : null}
       <header
-        className={`brand-panel flex flex-col gap-3 rounded-[var(--radius-card)] p-6 sm:p-8 lg:p-10 ${
+        className={`flex flex-col gap-2 py-2 ${
           align === "center" ? "items-center text-center" : "items-start text-right"
         }`}
       >
-        {eyebrow ? <p className="brand-eyebrow">{eyebrow}</p> : null}
-        <h1 className="max-w-4xl text-3xl font-black leading-tight text-white sm:text-4xl">
+        {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+        <h1 className="max-w-4xl text-2xl font-black leading-tight text-[var(--foreground)] sm:text-3xl">
           {title}
         </h1>
         {copy ? (
-          <p className="max-w-3xl text-sm leading-7 text-white/85 sm:text-base">{copy}</p>
+          <p className="max-w-3xl text-sm leading-7 text-[var(--text-muted)] sm:text-base">
+            {copy}
+          </p>
         ) : null}
       </header>
     </div>

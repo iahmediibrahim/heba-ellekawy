@@ -2,44 +2,32 @@ import type { Metadata } from "next"
 
 import { HomeHero } from "@/components/sections/home/home-hero"
 import { HomeCta } from "@/components/sections/home/home-cta"
+import { HomeCategories } from "@/components/sections/home/home-categories"
 import { HomeFounder } from "@/components/sections/home/home-founder"
 import { getHomePageData } from "@/lib/contentful"
-import { truncateText } from "@/lib/format"
 import { buildMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = buildMetadata({
-  keywords: ["خدماتنا", "الكتابات الأخيرة", "القصص القصيرة"],
+  keywords: ["العلاج النفسي", "مدونة شغبطة", "الروايات والكتب", "الأفلام القصيرة"],
   path: "/",
 })
 
 export default async function Home() {
   const data = await getHomePageData()
+  const aboutDescription = data.featuredAuthor?.shortBio || data.about.description
 
   return (
-    <div className="page-shell">
+    <div className="flex flex-col">
       <HomeHero
-        title="مساحة عربية حديثة للقراءة النفسية والأدبية"
-        description={truncateText(data.about.description, 220)}
         imageUrl="/brand/banner.png"
-        imageAlt="لوحات فنية ترمز إلى النفس والقراءة والكتابة"
+        imageAlt="لوحات فنية عن النفس والقراءة والكتابة"
       />
 
-      {/* <HomeFeatured
-        heroArticle={data.featuredArticles[0]}
-        articles={data.featuredArticles.slice(1, 4)}
-      /> */}
-
-      {/* <HomeCategories /> */}
-
-      <HomeFounder
-        author={data.featuredAuthor}
-        // stories={data.latestStories.slice(0, 2)}
-        stories={[]}
-      />
-
-      {/* <HomeServices services={data.services} /> */}
-
-      <HomeCta />
+      <div className="mx-auto flex w-full max-w-[76rem] flex-col gap-10 px-4 py-8 sm:px-6 sm:py-10 lg:gap-16 lg:px-8 lg:py-12">
+        <HomeFounder description={aboutDescription} />
+        <HomeCategories />
+        <HomeCta />
+      </div>
     </div>
   )
 }
