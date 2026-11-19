@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const suggestions = [
   { label: "الرئيسية", href: "/", icon: Home },
-  { label: "المدونة", href: "/blog", icon: PenLine },
+  { label: "فضاءات", href: "/blog", icon: PenLine },
   { label: "القصص القصيرة", href: "/stories", icon: Compass },
   { label: "تواصلي معنا", href: "/contact", icon: ArrowUpLeft },
 ]
@@ -22,7 +22,11 @@ export default function NotFound() {
   return (
     <div className="page-shell">
       <section className="brand-panel flex flex-col items-center gap-6 rounded-[2rem] px-6 py-14 text-center">
-        <BrandLogo variant="mark" tone="white" className="w-20" sizes="80px" />
+        <BrandLogo
+          variant="mark"
+          className="w-20 rounded-2xl bg-white p-2"
+          sizes="80px"
+        />
 
         <p className="text-sm font-bold uppercase tracking-[0.3em] text-white/70">404</p>
 
@@ -44,7 +48,7 @@ export default function NotFound() {
             variant="outlineOnBrand"
             icon={<PenLine className="size-4" />}
           >
-            تصفح المدونة
+            فضاءات
           </ButtonLink>
         </div>
       </section>

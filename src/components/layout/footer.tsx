@@ -40,16 +40,10 @@ export function Footer({ about }: { about: AboutData }) {
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/author"
-            className="font-semibold text-slate-700 transition hover:text-[var(--accent)]"
-          >
-            عن المؤسس
-          </Link>
         </nav>
 
-        <div className="mt-6 flex flex-col gap-4 border-t border-[var(--border)] pt-6 text-sm text-[var(--text-muted)] sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+        <div className="mt-6 flex flex-col items-center gap-4 border-t border-[var(--border)] pt-6 text-center text-sm text-[var(--text-muted)] sm:flex-row sm:justify-between sm:text-left">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
             {primaryPhone ? (
               <a
                 href={`tel:${primaryPhone}`}
@@ -72,10 +66,11 @@ export function Footer({ about }: { about: AboutData }) {
             <SocialIcons about={about} />
           </div>
 
-          <span className="inline-flex flex-wrap items-center gap-2" dir="ltr">
-            <span>
-              © {new Date().getFullYear()} {brand.nameEn}
-            </span>
+          <span
+            className="flex flex-wrap items-center justify-center gap-2 border-t border-[var(--border)] pt-4 sm:border-0 sm:pt-0"
+            dir="ltr"
+          >
+            <span>© {new Date().getFullYear()}</span>
             <span aria-hidden="true">·</span>
             <span>built with</span>
             <Heart className="size-4 " />

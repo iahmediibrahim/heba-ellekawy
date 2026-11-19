@@ -56,7 +56,7 @@ export const navigationGroups: NavigationGroup[] = [
   { label: "الرئيسية", href: "/" },
   { label: "عن المؤسس", href: "/author" },
   {
-    label: "المدونة",
+    label: "فضاءات",
     href: "/blog",
     sections: blogSections,
   },

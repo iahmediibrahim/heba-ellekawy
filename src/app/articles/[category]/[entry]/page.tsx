@@ -10,8 +10,8 @@ import { Breadcrumbs } from "@/components/articles/breadcrumbs"
 import { CategoryPagination } from "@/components/articles/category-pagination"
 import { LatestArticles } from "@/components/articles/latest-articles"
 import { ShareButtons } from "@/components/articles/share-buttons"
-import { FacebookPageEmbed } from "@/components/social/facebook-page-embed"
 import { JsonLd } from "@/components/seo/json-ld"
+import { FacebookPageEmbed } from "@/components/social/facebook-page-embed"
 import { CardGrid } from "@/components/ui/card-grid"
 import { ContentLayout } from "@/components/ui/content-layout"
 import { EmptyState } from "@/components/ui/empty-state"
@@ -142,7 +142,7 @@ export default async function ArticleEntryPage({
               <Breadcrumbs
                 items={[
                   { label: "الرئيسية", href: "/" },
-                  { label: "المدونة", href: "/blog" },
+                  { label: "فضاءات", href: "/blog" },
                   { label: getCategoryTitle(category) },
                 ]}
               />
@@ -196,7 +196,7 @@ export default async function ArticleEntryPage({
           <Breadcrumbs
             items={[
               { label: "الرئيسية", href: "/" },
-              { label: "المدونة", href: "/blog" },
+              { label: "فضاءات", href: "/blog" },
               { label: getCategoryTitle(category), href: `/articles/${category}` },
             ]}
           />
@@ -284,7 +284,7 @@ export default async function ArticleEntryPage({
               url: site.siteUrl,
               logo: {
                 "@type": "ImageObject",
-                url: `${site.siteUrl}/brand/logo-mark.png`,
+                url: `${site.siteUrl}/brand/logo.jpeg`,
               },
             },
             articleSection: getCategoryTitle(category),

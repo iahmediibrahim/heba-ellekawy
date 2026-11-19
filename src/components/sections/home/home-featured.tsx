@@ -50,7 +50,7 @@ export function HomeFeatured({
                 اقرأ المقال
               </ButtonLink>
               <ButtonLink href="/blog" variant="secondary">
-                المزيد من المدونة
+                فضاءات
               </ButtonLink>
             </div>
           </div>

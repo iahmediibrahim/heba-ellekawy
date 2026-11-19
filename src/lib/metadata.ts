@@ -5,9 +5,9 @@ import { getSiteUrl } from "@/lib/site-url"
 import type { SeoImage } from "@/lib/types"
 
 const DEFAULT_OG_IMAGE = {
-  src: "/brand/banner-cyan.png",
-  width: 1200,
-  height: 675,
+  src: "/brand/logo.jpeg",
+  width: 1774,
+  height: 887,
 }
 
 export function buildMetadata({

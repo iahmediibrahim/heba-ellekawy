@@ -1,32 +1,25 @@
 @import "tailwindcss";
 
-/*
-  Brand palette extracted from the official logo + banner artwork:
-  - Primary blue   #277EE1  (wordmark / brain right half)
-  - Deep blue      #1A6FD6  (banner background, hover states)
-  - Brand cyan     #29AAE1  (brain left half / cyan banner)
-  - Light cyan     #29B3EC  (highlights)
-*/
 :root {
-  --background: #f5f9fd;
-  --foreground: #0e2337;
+  --background: #fafafa;
+  --foreground: #111111;
   --surface: #ffffff;
   --surface-strong: #ffffff;
-  --surface-muted: #eef5fd;
-  --surface-cyan: #e7f6fd;
-  --border: rgba(39, 126, 225, 0.12);
-  --border-strong: rgba(39, 126, 225, 0.24);
-  --accent: #277ee1;
-  --accent-strong: #1a6fd6;
-  --accent-cyan: #29aae1;
-  --accent-soft: #dbeefb;
-  --text-muted: #56708a;
-  --shadow-soft: 0 14px 34px -26px rgba(20, 88, 160, 0.24);
-  --shadow-card: 0 26px 60px -38px rgba(20, 88, 160, 0.28);
+  --surface-muted: #f3f3f3;
+  --surface-cyan: #f3f3f3;
+  --border: rgba(17, 17, 17, 0.1);
+  --border-strong: rgba(17, 17, 17, 0.22);
+  --accent: #171717;
+  --accent-strong: #000000;
+  --accent-cyan: #555555;
+  --accent-soft: #eeeeee;
+  --text-muted: #626262;
+  --shadow-soft: 0 14px 34px -26px rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 26px 60px -38px rgba(0, 0, 0, 0.24);
   --radius-card: 1.6rem;
-  --brand-gradient: linear-gradient(135deg, #2fb2e6 0%, #277ee1 52%, #1a5fd0 100%);
-  --brand-gradient-deep: linear-gradient(140deg, #1a6fd6 0%, #1757b4 60%, #123f8c 100%);
-  --brand-ring: 0 0 0 4px rgba(39, 126, 225, 0.12);
+  --brand-gradient: linear-gradient(135deg, #3a3a3a 0%, #171717 52%, #000000 100%);
+  --brand-gradient-deep: linear-gradient(140deg, #292929 0%, #111111 60%, #000000 100%);
+  --brand-ring: 0 0 0 4px rgba(0, 0, 0, 0.12);
   --font-body: "IBM Plex Sans Arabic";
   --font-heading: "IBM Plex Sans Arabic";
 }
@@ -47,8 +40,8 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
   background-image:
-    radial-gradient(circle at top, rgba(43, 178, 230, 0.16), transparent 34%),
-    linear-gradient(180deg, #fbfdff 0%, #f5f9fd 40%, #eef4fb 100%);
+    radial-gradient(circle at top, rgba(0, 0, 0, 0.06), transparent 34%),
+    linear-gradient(180deg, #ffffff 0%, #fafafa 40%, #f1f1f1 100%);
   min-height: 100vh;
 }
 
@@ -71,7 +64,7 @@ a {
 }
 
 ::selection {
-  background: rgba(41, 170, 225, 0.28);
+  background: rgba(0, 0, 0, 0.16);
 }
 
 :focus-visible {
@@ -180,7 +173,7 @@ a {
 }
 
 .surface-muted {
-  border: 1px solid rgba(39, 126, 225, 0.1);
+  border: 1px solid rgba(17, 17, 17, 0.08);
   background: var(--surface-muted);
   border-radius: calc(var(--radius-card) - 0.4rem);
 }
@@ -190,7 +183,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  border: 1px solid rgba(39, 126, 225, 0.14);
+  border: 1px solid rgba(17, 17, 17, 0.12);
   background: var(--surface-muted);
   border-radius: 999px;
   padding: 0.62rem 0.95rem;
@@ -214,12 +207,12 @@ a {
 .primary-button {
   background: var(--brand-gradient);
   color: white;
-  box-shadow: 0 16px 34px -20px rgba(26, 111, 214, 0.65);
+  box-shadow: 0 16px 34px -20px rgba(0, 0, 0, 0.42);
 }
 
 .primary-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 18px 40px -18px rgba(26, 111, 214, 0.7);
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.48);
 }
 
 .secondary-button {
@@ -229,7 +222,7 @@ a {
 }
 
 .secondary-button:hover {
-  border-color: rgba(39, 126, 225, 0.45);
+  border-color: rgba(17, 17, 17, 0.36);
   background: var(--surface-muted);
 }
 
@@ -254,19 +247,19 @@ a {
 }
 
 .input-field::placeholder {
-  color: rgba(86, 112, 138, 0.75);
+  color: rgba(98, 98, 98, 0.75);
 }
 
 .input-field:focus {
-  border-color: rgba(39, 126, 225, 0.45);
+  border-color: rgba(17, 17, 17, 0.36);
   box-shadow: var(--brand-ring);
   background: white;
   outline: none;
 }
 
 .glass-header {
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 10px 30px -26px rgba(20, 88, 160, 0.35);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 10px 30px -26px rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(14px);
 }
 
@@ -293,7 +286,7 @@ a {
 }
 
 .subtle-dot-grid {
-  background-image: radial-gradient(rgba(39, 126, 225, 0.12) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(17, 17, 17, 0.1) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 
@@ -320,8 +313,8 @@ a {
 
 .content-html blockquote {
   margin: 1.5rem 0;
-  border-inline-start: 3px solid rgba(39, 126, 225, 0.3);
-  background: rgba(238, 245, 253, 0.85);
+  border-inline-start: 3px solid rgba(17, 17, 17, 0.28);
+  background: rgba(243, 243, 243, 0.9);
   border-radius: 1.5rem;
   padding: 1rem 1.25rem;
 }

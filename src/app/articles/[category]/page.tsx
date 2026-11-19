@@ -59,7 +59,7 @@ export default async function ArticleCategoryPage({
             <Breadcrumbs
               items={[
                 { label: "الرئيسية", href: "/" },
-                { label: "المدونة", href: "/blog" },
+                { label: "فضاءات", href: "/blog" },
                 { label: getCategoryTitle(category) },
               ]}
             />

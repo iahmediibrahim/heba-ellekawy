@@ -45,7 +45,7 @@ export function HomeHero({
             variant="outlineOnBrand"
             icon={<BookOpen className="size-4" />}
           >
-            تصفح المدونة
+            فضاءات
           </ButtonLink>
         </div>
       </div>
@@ -63,7 +63,11 @@ export function HomeHero({
             />
           ) : (
             <div className="brand-panel flex h-full flex-col items-center justify-center gap-6 p-8 text-center">
-              <BrandLogo variant="mark" tone="white" className="w-28" sizes="112px" />
+              <BrandLogo
+                variant="mark"
+                className="w-28 rounded-2xl bg-white p-2"
+                sizes="112px"
+              />
               <p className="text-xl font-bold text-white">د. هبة اللكاوي</p>
               <p className="text-sm text-white/80">psychiatrist & psychotherapist</p>
             </div>

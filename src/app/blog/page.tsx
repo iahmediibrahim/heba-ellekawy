@@ -1,6 +1,6 @@
-import Link from "next/link"
 import { Search } from "lucide-react"
 import type { Metadata } from "next"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 import { ArticleCard } from "@/components/articles/article-card"
@@ -10,8 +10,8 @@ import { CustomDropdown } from "@/components/ui/custom-dropdown"
 import { EmptyState } from "@/components/ui/empty-state"
 import { PageHeader } from "@/components/ui/page-header"
 import { Section, SectionHeading } from "@/components/ui/section"
-import { getArticles } from "@/lib/contentful"
 import { getCategoryTitle, isCategory } from "@/lib/articles"
+import { getArticles } from "@/lib/contentful"
 import { buildMetadata } from "@/lib/metadata"
 import { ARTICLE_CATEGORIES } from "@/lib/types"
 
@@ -20,10 +20,10 @@ export const revalidate = 300
 const ARTICLES_PER_PAGE = 12
 
 export const metadata: Metadata = buildMetadata({
-  title: "المدونة",
+  title: "فضاءات",
   description:
     "كل مقالات د. هبة اللكاوي في مكان واحد: مقالات نفسية، مقالات عن العلاقات والتربية، كتابة حرة، ترشيحات كتب وأفلام، ورحلات مع الكتابة.",
-  keywords: ["المدونة", "المقالات", "مقالات نفسية", "كتابة حرة"],
+  keywords: ["فضاءات", "المقالات", "مقالات نفسية", "كتابة حرة"],
   path: "/blog",
 })
 
@@ -78,7 +78,7 @@ export default async function BlogPage({
     <div className="page-shell">
       <Section>
         <PageHeader
-          eyebrow="المدونة"
+          eyebrow="فضاءات"
           title="كل المقالات في مكان واحد"
           copy="مجموعة مقالات في النفس والعلاقات والتربية والكتابة الحرة — اختر القسم الذي يناسبك وابدأ القراءة."
         />
