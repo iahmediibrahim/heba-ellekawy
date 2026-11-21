@@ -8,7 +8,7 @@ export function SiteShell({
   about,
   children,
 }: Readonly<{
-  about: AboutData
+  about: AboutData | null
   children: React.ReactNode
 }>) {
   return (

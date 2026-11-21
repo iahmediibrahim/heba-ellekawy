@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { notFound } from "next/navigation"
 import { FaFacebookF } from "react-icons/fa6"
 
 import { ArticleCard } from "@/components/articles/article-card"
@@ -13,6 +14,10 @@ import { buildMetadata } from "@/lib/metadata"
 
 export async function generateMetadata(): Promise<Metadata> {
   const author = await getAuthorData()
+
+  if (!author) {
+    notFound()
+  }
 
   return buildMetadata({
     title: `${author.name} ${author.title ? `- ${author.title}` : ""}`,
@@ -34,6 +39,10 @@ export default async function AuthorPage() {
     getAuthorData(),
     getLatestArticles(3),
   ])
+
+  if (!author) {
+    notFound()
+  }
 
   return (
     <div className="page-shell">

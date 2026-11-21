@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { redirect } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import { LuSearch } from "react-icons/lu"
 
 import { ArticleCard } from "@/components/articles/article-card"
@@ -70,6 +70,10 @@ export default async function BlogPage({
 
   if (page > pagination.totalPages) {
     redirect(getPageHref(pagination.totalPages, query, category))
+  }
+
+  if (!hasFilters && pagination.totalItems === 0) {
+    notFound()
   }
 
   const featuredArticle =

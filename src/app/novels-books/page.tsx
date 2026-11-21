@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { notFound } from "next/navigation"
 import { LuBookOpen, LuDownload } from "react-icons/lu"
 
 import { NovelCard } from "@/components/novels/novel-card"
@@ -22,6 +23,11 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function NovelsBooksPage() {
   const [novels, stories] = await Promise.all([getNovels(), getStories()])
+
+  if (!novels.length && !stories.length) {
+    notFound()
+  }
+
   const inShop = novels.filter((novel) => novel.inShop)
   const electronic = novels.filter((novel) => !novel.inShop)
 

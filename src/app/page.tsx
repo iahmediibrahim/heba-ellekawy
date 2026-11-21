@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { notFound } from "next/navigation"
 
 import { HomeCategories } from "@/components/sections/home/home-categories"
 import { HomeCta } from "@/components/sections/home/home-cta"
@@ -14,6 +15,11 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function Home() {
   const data = await getHomePageData()
+
+  if (!data) {
+    notFound()
+  }
+
   const aboutDescription = data.featuredAuthor?.shortBio ?? ""
   const name = data.featuredAuthor?.name ?? ""
 

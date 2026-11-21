@@ -8,8 +8,8 @@ import { brand } from "@/lib/brand"
 import { navigationGroups } from "@/lib/navigation"
 import type { AboutData } from "@/lib/types"
 
-export function Footer({ about }: { about: AboutData }) {
-  const primaryPhone = about.phone[0]
+export function Footer({ about }: { about: AboutData | null }) {
+  const primaryPhone = about?.phone[0]
   const footerGroups = navigationGroups.filter(
     (group) => group.href || group.items?.length || group.sections?.length,
   )
@@ -64,7 +64,7 @@ export function Footer({ about }: { about: AboutData }) {
                 <LuPhone className="size-4" />
               </a>
             ) : null}
-            {about.mail ? (
+            {about?.mail ? (
               <a
                 href={`mailto:${about.mail}`}
                 className="inline-flex items-center gap-2 transition hover:text-[var(--accent)]"
@@ -74,7 +74,7 @@ export function Footer({ about }: { about: AboutData }) {
                 {about.mail}
               </a>
             ) : null}
-            <SocialIcons about={about} />
+            {about ? <SocialIcons about={about} /> : null}
           </div>
 
           <span

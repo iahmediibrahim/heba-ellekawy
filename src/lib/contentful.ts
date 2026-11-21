@@ -11,8 +11,8 @@ import { cache } from "react"
 
 import { CATEGORY_ARTICLES_PER_PAGE } from "@/lib/articles"
 import { brand, siteDescription, siteTitle } from "@/lib/brand"
-import { getSiteUrl } from "@/lib/site-url"
 import { markdownToHtml, markdownToPlainText } from "@/lib/markdown"
+import { getSiteUrl } from "@/lib/site-url"
 import {
   ARTICLE_CATEGORIES,
   type AboutData,
@@ -46,132 +46,6 @@ type ContentfulEntry<T extends EntrySkeletonType = EntrySkeletonType> = Entry<
 type ContentfulClient = ContentfulClientApi<undefined>
 
 let client: ContentfulClient | null = null
-
-const fallbackAbout: AboutData = {
-  title: brand.roleAr,
-  description: siteDescription,
-  phone: ["01200000000"],
-  mail: "hello@shaghbatta.com",
-  facebook: "https://www.facebook.com/ShaghbattaPsychiatrist",
-  instagram: "https://www.instagram.com/shaghbatta/",
-  soundcloud: "https://soundcloud.com/",
-  askfm: "https://ask.fm/",
-  whatsapp: ["201200000000"],
-  soundCloudTrackHtml:
-    '<iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1500000000&color=%23277ee1"></iframe>',
-  instagramFeed: "https://www.instagram.com/p/CWTc5o3IkTb/",
-  services: [
-    {
-      id: "service-1",
-      name: "الاستشارات النفسية",
-      icon: {
-        url: "/brand/symbol.png",
-        width: 460,
-        height: 460,
-        title: "Service",
-      },
-    },
-    {
-      id: "service-2",
-      name: "ورش الكتابة",
-      icon: {
-        url: "/brand/symbol.png",
-        width: 460,
-        height: 460,
-        title: "Service",
-      },
-    },
-    {
-      id: "service-3",
-      name: "برامج التوعية",
-      icon: {
-        url: "/brand/symbol.png",
-        width: 460,
-        height: 460,
-        title: "Service",
-      },
-    },
-    {
-      id: "service-4",
-      name: "جلسات الحجز والمتابعة",
-      icon: {
-        url: "/brand/symbol.png",
-        width: 460,
-        height: 460,
-        title: "Service",
-      },
-    },
-  ],
-}
-
-const fallbackAuthor: AuthorData = {
-  id: "author-1",
-  name: "د. هبة اللكاوي",
-  who: "عن المؤسس",
-  title: "طبيب أخصائي الطب النفسي وتعديل السلوك",
-  facebook: "https://www.facebook.com/ShaghbattaPsychiatrist",
-  description:
-    "طبيبة طب نفسي وتعديل سلوك، وروائية وكاتبة. تكتب عن النفس والعلاقات والتربية، وتقدّم جلسات ومتابعة نصية، وورش كتابة.",
-  descriptionHtml:
-    "<p>طبيبة طب نفسي وتعديل سلوك، وروائية وكاتبة. تكتب عن النفس والعلاقات والتربية، وتقدّم جلسات ومتابعة نصية، وورش كتابة.</p>",
-}
-
-const fallbackArticles: BlogPost[] = [
-  {
-    id: "post-1",
-    title: "مقال تجريبي من نسخة الترحيل",
-    slug: "migration-sample-article",
-    category: "thoughts-and-tips",
-    publishDate: "2026-07-23",
-    source: brand.name,
-    description:
-      "هذا محتوى تجريبي مؤقت يظهر فقط عند غياب مفاتيح Contentful في بيئة التطوير.",
-    bodyHtml:
-      "<p>هذا المقال موجود فقط لضمان أن نسخة Next.js تعمل في بيئة التطوير الحالية. عند إضافة مفاتيح Contentful ستظهر المقالات الأصلية بالكامل بنفس الروابط.</p>",
-    authorName: "د. هبة اللكاوي",
-    instagram: null,
-    featured: true,
-    shortStoryImages: [],
-  },
-]
-
-const fallbackStories: Story[] = [
-  {
-    id: "story-1",
-    title: "قصة تجريبية",
-    publishedDate: "2026-07-23",
-    authorName: "د. هبة اللكاوي",
-    shortBio: "مثال مؤقت للقصة حتى يتم ربط مفاتيح Contentful.",
-    pdfUrl: "#",
-    pdfFileName: "story.pdf",
-    heroImage: {
-      url: "/brand/symbol.png",
-      width: 460,
-      height: 460,
-      title: "Story",
-    },
-  },
-]
-
-const fallbackNovels: Novel[] = [
-  {
-    id: "novel-1",
-    title: "رواية تجريبية",
-    publishedDate: "2026-07-23",
-    authorName: "د. هبة اللكاوي",
-    shortBio: "مثال مؤقت للروايات حتى يتم ربط مفاتيح Contentful.",
-    shortBioHtml: "<p>مثال مؤقت للروايات حتى يتم ربط مفاتيح Contentful.</p>",
-    pdfUrl: "#",
-    pdfFileName: "novel.pdf",
-    inShop: false,
-    heroImage: {
-      url: "/brand/logo.png",
-      width: 1774,
-      height: 887,
-      title: "Novel",
-    },
-  },
-]
 
 function hasContentfulConfig() {
   return Boolean(process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN)
@@ -312,23 +186,26 @@ function mapAuthor(entry: ContentfulEntry | undefined): AuthorData | undefined {
     who: entry.fields.who ? String(entry.fields.who) : undefined,
     title: entry.fields.title ? String(entry.fields.title) : undefined,
     facebook: entry.fields.facebook ? String(entry.fields.facebook) : undefined,
+    qualifications: ensureArray(entry.fields.qualifications).map(String),
+    experience: ensureArray(entry.fields.experience).map(String),
+    publications: ensureArray(entry.fields.publications).map(String),
+    shortBio: mapTextField(entry.fields.shortBio),
+    shortBioHtml: mapHtmlField(entry.fields.shortBio),
     description: markdownToPlainText(mapTextField(entry.fields.description)),
     descriptionHtml: markdownToHtml(mapTextField(entry.fields.description)),
     image: mapImage(entry.fields.image as Asset<undefined, string> | undefined),
   }
 }
 
-function mapAbout(entry: ContentfulEntry | undefined): AboutData {
+function mapAbout(entry: ContentfulEntry | undefined): AboutData | undefined {
   if (!entry) {
-    return fallbackAbout
+    return undefined
   }
 
   return {
-    title: String(entry.fields.title ?? fallbackAbout.title),
-    description: mapTextField(entry.fields.description) || fallbackAbout.description,
-    image:
-      mapImage(entry.fields.image as Asset<undefined, string> | undefined) ??
-      fallbackAbout.image,
+    title: String(entry.fields.title ?? ""),
+    description: mapTextField(entry.fields.description),
+    image: mapImage(entry.fields.image as Asset<undefined, string> | undefined),
     phone: ensureArray(entry.fields.phone).map(String),
     mail: entry.fields.mail ? String(entry.fields.mail) : undefined,
     facebook: entry.fields.facebook ? String(entry.fields.facebook) : undefined,
@@ -427,51 +304,55 @@ export function getSiteMetadata() {
   return siteMetadata
 }
 
-export const getAboutData = cache(async function getAboutData() {
-  const contentfulClient = getClient()
+export const getAboutData = cache(
+  async function getAboutData(): Promise<AboutData | null> {
+    const contentfulClient = getClient()
 
-  if (contentfulClient === null) {
-    return fallbackAbout
-  }
+    if (contentfulClient === null) {
+      return null
+    }
 
-  const response = await contentfulClient.getEntries({
-    content_type: "about",
-    limit: 1,
-    include: 2,
-  })
+    const response = await contentfulClient.getEntries({
+      content_type: "about",
+      limit: 1,
+      include: 2,
+    })
 
-  return mapAbout(response.items[0])
-})
+    return mapAbout(response.items[0] as ContentfulEntry | undefined) ?? null
+  },
+)
 
-export const getAuthorData = cache(async function getAuthorData() {
-  const contentfulClient = getClient()
+export const getAuthorData = cache(
+  async function getAuthorData(): Promise<AuthorData | null> {
+    const contentfulClient = getClient()
 
-  if (contentfulClient === null) {
-    return fallbackAuthor
-  }
+    if (contentfulClient === null) {
+      return null
+    }
 
-  const response = await contentfulClient.getEntries({
-    content_type: "person",
-    include: 2,
-  })
+    const response = await contentfulClient.getEntries({
+      content_type: "person",
+      include: 2,
+    })
 
-  const owner =
-    response.items.find((entry: ContentfulEntry) =>
-      String(entry.fields.who ?? "").includes("المؤسس"),
-    ) ??
-    response.items.find((entry: ContentfulEntry) =>
-      String(entry.fields.name ?? "").includes("هبة"),
-    ) ??
-    response.items[0]
+    const owner =
+      response.items.find((entry: ContentfulEntry) =>
+        String(entry.fields.who ?? "").includes("المؤسس"),
+      ) ??
+      response.items.find((entry: ContentfulEntry) =>
+        String(entry.fields.name ?? "").includes("هبة"),
+      ) ??
+      response.items[0]
 
-  return mapAuthor(owner as ContentfulEntry | undefined) ?? fallbackAuthor
-})
+    return mapAuthor(owner as ContentfulEntry | undefined) ?? null
+  },
+)
 
 export const getLatestArticles = cache(async function getLatestArticles(limit = 5) {
   const contentfulClient = getClient()
 
   if (contentfulClient === null) {
-    return fallbackArticles.slice(0, limit)
+    return []
   }
 
   const response = await contentfulClient.getEntries({
@@ -488,11 +369,7 @@ export const getSitemapArticles = cache(async function getSitemapArticles() {
   const contentfulClient = getClient()
 
   if (contentfulClient === null) {
-    return fallbackArticles.map(({ category, slug, publishDate }) => ({
-      category,
-      slug,
-      publishDate,
-    }))
+    return []
   }
 
   const response = await contentfulClient.getEntries({
@@ -518,7 +395,7 @@ export const getFeaturedArticles = cache(async function getFeaturedArticles(limi
   const contentfulClient = getClient()
 
   if (contentfulClient === null) {
-    return fallbackArticles.filter((article) => article.featured).slice(0, limit)
+    return []
   }
 
   const response = await contentfulClient.getEntries({
@@ -536,7 +413,7 @@ export const getStories = cache(async function getStories() {
   const contentfulClient = getClient()
 
   if (contentfulClient === null) {
-    return fallbackStories
+    return []
   }
 
   const response = await contentfulClient.getEntries({
@@ -552,7 +429,7 @@ export const getNovels = cache(async function getNovels() {
   const contentfulClient = getClient()
 
   if (contentfulClient === null) {
-    return fallbackNovels
+    return []
   }
 
   const response = await contentfulClient.getEntries({
@@ -572,30 +449,16 @@ export const getArticles = cache(async function getArticles(
 ): Promise<PaginatedArticles> {
   const currentPage = Math.max(1, Math.floor(page))
   const currentPageSize = Math.max(1, Math.floor(pageSize))
-  const normalizedSearch = search.trim().toLocaleLowerCase()
   const contentfulClient = getClient()
 
   if (contentfulClient === null) {
-    const items = fallbackArticles.filter((post: BlogPost) => {
-      const matchesCategory = !category || post.category === category
-      const searchableText =
-        `${post.title} ${post.description ?? ""} ${post.bodyHtml ?? ""}`.toLocaleLowerCase()
-      const matchesSearch = !normalizedSearch || searchableText.includes(normalizedSearch)
-
-      return matchesCategory && matchesSearch
-    })
-    const totalPages = Math.max(1, Math.ceil(items.length / currentPageSize))
-
     return {
-      items: items.slice(
-        (currentPage - 1) * currentPageSize,
-        currentPage * currentPageSize,
-      ),
+      items: [],
       pagination: {
         currentPage,
         pageSize: currentPageSize,
-        totalItems: items.length,
-        totalPages,
+        totalItems: 0,
+        totalPages: 1,
       },
     }
   }
@@ -637,14 +500,7 @@ export const getArticleByCategoryAndSlug = cache(
     const contentfulClient = getClient()
 
     if (contentfulClient === null) {
-      return (
-        fallbackArticles.find(
-          (item: BlogPost) =>
-            item.category === category &&
-            (item.slug === normalizedTarget ||
-              normalizeSlug(item.title) === normalizedTarget),
-        ) ?? null
-      )
+      return null
     }
 
     const directResponse = await contentfulClient.getEntries({
@@ -679,7 +535,7 @@ export const getArticleByCategoryAndSlug = cache(
 )
 
 export const getHomePageData = cache(
-  async function getHomePageData(): Promise<HomePageData> {
+  async function getHomePageData(): Promise<HomePageData | null> {
     const [about, featuredAuthor, featuredArticles, latestStories] = await Promise.all([
       getAboutData(),
       getAuthorData(),
@@ -687,10 +543,14 @@ export const getHomePageData = cache(
       getStories(),
     ])
 
+    if (!about) {
+      return null
+    }
+
     return {
       site: getSiteMetadata(),
       about,
-      featuredAuthor,
+      featuredAuthor: featuredAuthor ?? undefined,
       featuredArticles,
       latestStories: latestStories.slice(0, 2),
       services: about.services,

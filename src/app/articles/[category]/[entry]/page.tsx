@@ -9,6 +9,7 @@ import { ArticleMeta } from "@/components/articles/article-meta"
 import { Breadcrumbs } from "@/components/articles/breadcrumbs"
 import { CategoryPagination } from "@/components/articles/category-pagination"
 import { LatestArticles } from "@/components/articles/latest-articles"
+import { PostMedia } from "@/components/articles/post-media"
 import { ShareButtons } from "@/components/articles/share-buttons"
 import { JsonLd } from "@/components/seo/json-ld"
 import { FacebookPageEmbed } from "@/components/social/facebook-page-embed"
@@ -26,7 +27,6 @@ import {
   getSiteMetadata,
 } from "@/lib/contentful"
 import { buildMetadata } from "@/lib/metadata"
-import type { ContentfulImage } from "@/lib/types"
 
 export const dynamic = "force-static"
 export const revalidate = 300
@@ -83,31 +83,6 @@ export async function generateMetadata({
         }
       : undefined,
   })
-}
-
-function PostMedia({ images }: { images: ContentfulImage[] }) {
-  if (!images.length) {
-    return null
-  }
-
-  return (
-    <div className="grid gap-4">
-      {images.map((image: ContentfulImage) => (
-        <div
-          key={image.url}
-          className="relative aspect-[16/10] overflow-hidden rounded-4xl bg-[var(--surface-muted)]"
-        >
-          <Image
-            src={image.url}
-            alt={image.title}
-            fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 60vw, 100vw"
-          />
-        </div>
-      ))}
-    </div>
-  )
 }
 
 export default async function ArticleEntryPage({
@@ -227,7 +202,7 @@ export default async function ArticleEntryPage({
               src={post.heroImage.url}
               alt={post.title}
               fill
-              className="object-cover"
+              className="mx-auto h-auto w-full object-contain"
               sizes="(min-width: 1024px) 60vw, 100vw"
               priority
               fetchPriority="high"

@@ -15,7 +15,7 @@ export function HomeCta() {
         variant="primary"
         className="!min-w-40 !rounded-md !bg-black px-10 py-3 shadow-none hover:!shadow-none"
       >
-        احجز جلسة
+        احجز جلستك
       </ButtonLink>
     </section>
   )
