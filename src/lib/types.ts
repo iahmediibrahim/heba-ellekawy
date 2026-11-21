@@ -73,6 +73,8 @@ export interface AuthorData {
   publications: string[]
   shortBio: string
   shortBioHtml?: string
+  description: string
+  descriptionHtml?: string
   image?: ContentfulImage
 }
 

@@ -14,8 +14,8 @@ export const metadata: Metadata = buildMetadata({
 
 export default async function Home() {
   const data = await getHomePageData()
-  const aboutDescription = data.featuredAuthor?.shortBio!
-  const name = data.featuredAuthor?.name!
+  const aboutDescription = data.featuredAuthor?.shortBio ?? ""
+  const name = data.featuredAuthor?.name ?? ""
 
   return (
     <div className="flex flex-col">

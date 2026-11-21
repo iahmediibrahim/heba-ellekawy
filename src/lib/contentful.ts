@@ -12,6 +12,7 @@ import { cache } from "react"
 import { CATEGORY_ARTICLES_PER_PAGE } from "@/lib/articles"
 import { brand, siteDescription, siteTitle } from "@/lib/brand"
 import { getSiteUrl } from "@/lib/site-url"
+import { markdownToHtml, markdownToPlainText } from "@/lib/markdown"
 import {
   ARTICLE_CATEGORIES,
   type AboutData,
@@ -109,12 +110,9 @@ const fallbackAuthor: AuthorData = {
   who: "عن المؤسس",
   title: "طبيب أخصائي الطب النفسي وتعديل السلوك",
   facebook: "https://www.facebook.com/ShaghbattaPsychiatrist",
-  qualifications: ["بيانات المؤهلات ستظهر عند ربط Contentful"],
-  experience: ["بيانات الخبرات ستظهر عند ربط Contentful"],
-  publications: ["بيانات الإصدارات ستظهر عند ربط Contentful"],
-  shortBio:
+  description:
     "طبيبة طب نفسي وتعديل سلوك، وروائية وكاتبة. تكتب عن النفس والعلاقات والتربية، وتقدّم جلسات ومتابعة نصية، وورش كتابة.",
-  shortBioHtml:
+  descriptionHtml:
     "<p>طبيبة طب نفسي وتعديل سلوك، وروائية وكاتبة. تكتب عن النفس والعلاقات والتربية، وتقدّم جلسات ومتابعة نصية، وورش كتابة.</p>",
 }
 
@@ -314,11 +312,8 @@ function mapAuthor(entry: ContentfulEntry | undefined): AuthorData | undefined {
     who: entry.fields.who ? String(entry.fields.who) : undefined,
     title: entry.fields.title ? String(entry.fields.title) : undefined,
     facebook: entry.fields.facebook ? String(entry.fields.facebook) : undefined,
-    qualifications: ensureArray(entry.fields.qualifications).map(String),
-    experience: ensureArray(entry.fields.experience).map(String),
-    publications: ensureArray(entry.fields.publications).map(String),
-    shortBio: mapTextField(entry.fields.shortBio),
-    shortBioHtml: mapHtmlField(entry.fields.shortBio),
+    description: markdownToPlainText(mapTextField(entry.fields.description)),
+    descriptionHtml: markdownToHtml(mapTextField(entry.fields.description)),
     image: mapImage(entry.fields.image as Asset<undefined, string> | undefined),
   }
 }

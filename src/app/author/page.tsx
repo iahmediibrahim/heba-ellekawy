@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return buildMetadata({
     title: `${author.name} ${author.title ? `- ${author.title}` : ""}`,
-    description: author?.shortBio,
+    description: author.description,
     keywords: ["عن المؤسس", "السيرة الذاتية", "د. هبة اللكاوي"],
     path: "/author",
     image: author?.image
@@ -34,12 +34,6 @@ export default async function AuthorPage() {
     getAuthorData(),
     getLatestArticles(3),
   ])
-
-  const authorSections = [
-    { id: "qualifications", title: "المؤهلات", items: author.qualifications },
-    { id: "experience", title: "الخبرات", items: author.experience },
-    { id: "publications", title: "الإصدارات الكتابية", items: author.publications },
-  ]
 
   return (
     <div className="page-shell">
@@ -87,47 +81,10 @@ export default async function AuthorPage() {
       <section className="section-stack">
         <SectionHeading eyebrow="نبذة" title="عن هبة" />
         <Prose
-          html={author.shortBioHtml ?? `<p>${author.shortBio}</p>`}
+          html={author.descriptionHtml ?? `<p>${author.description}</p>`}
           className="surface-card p-6 text-right text-base leading-9 text-slate-600 sm:p-8"
         />
       </section>
-
-      <nav aria-label="أقسام السيرة الذاتية" className="flex flex-wrap gap-2">
-        {authorSections.map((section) => (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
-          >
-            {section.title}
-          </a>
-        ))}
-      </nav>
-
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {authorSections.map((section) => (
-          <section
-            key={section.id}
-            id={section.id}
-            className="surface-card scroll-mt-24 p-5 sm:p-6"
-          >
-            <h2 className="mb-3 text-xl font-bold text-[var(--accent)]">
-              {section.title}
-            </h2>
-            <ul className="space-y-2 text-sm leading-7 text-[var(--text-muted)]">
-              {section.items.map((item) => (
-                <li key={item} className="flex items-start gap-2">
-                  <span
-                    aria-hidden="true"
-                    className="mt-3 size-1.5 shrink-0 rounded-full bg-[var(--accent-cyan)]"
-                  />
-                  <span>{item}.</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
-      </div>
 
       <section className="section-stack">
         <SectionHeading

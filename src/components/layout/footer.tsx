@@ -2,6 +2,7 @@ import Link from "next/link"
 import { LuHeart, LuMail, LuPhone } from "react-icons/lu"
 
 import { BrandLogo } from "@/components/layout/logo"
+import { NavigationDropdown } from "@/components/layout/navigation-dropdown"
 import { SocialIcons } from "@/components/social/social-icons"
 import { brand } from "@/lib/brand"
 import { navigationGroups } from "@/lib/navigation"
@@ -9,9 +10,9 @@ import type { AboutData } from "@/lib/types"
 
 export function Footer({ about }: { about: AboutData }) {
   const primaryPhone = about.phone[0]
-  const links = navigationGroups
-    .filter((group) => group.href)
-    .map((group) => ({ label: group.label!, href: group.href! }))
+  const footerGroups = navigationGroups.filter(
+    (group) => group.href || group.items?.length || group.sections?.length,
+  )
 
   return (
     <footer className="mt-6 border-t border-[var(--border)] bg-[var(--surface)] px-5 pb-6 pt-10 sm:px-8">
@@ -31,15 +32,25 @@ export function Footer({ about }: { about: AboutData }) {
           aria-label="روابط الفوتر"
           className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--border)] pt-6 text-sm"
         >
-          {links.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="font-semibold text-slate-700 transition hover:text-[var(--accent)]"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {footerGroups.map((group) =>
+            group.items?.length || group.sections?.length ? (
+              <NavigationDropdown key={group.label} group={group} variant="footer" />
+            ) : (
+              <Link
+                key={group.label}
+                href={group.href!}
+                className="font-semibold text-slate-700 transition hover:text-[var(--accent)]"
+              >
+                {group.label}
+              </Link>
+            ),
+          )}
+          <Link
+            href="/contact"
+            className="font-semibold text-slate-700 transition hover:text-[var(--accent)]"
+          >
+            احجز جلستك
+          </Link>
         </nav>
 
         <div className="mt-6 flex flex-col items-center gap-4 border-t border-[var(--border)] pt-6 text-center text-sm text-[var(--text-muted)] sm:flex-row sm:justify-between sm:text-left">
