@@ -190,7 +190,7 @@ export function Navigation() {
         تخطَّ إلى المحتوى
       </a>
 
-      <header className="glass-header sticky top-3 z-40 mx-auto w-[calc(100%-1.5rem)] max-w-7xl rounded-[var(--radius-card)] border border-[var(--border)] shadow-[var(--shadow-soft)] sm:w-[calc(100%-2.5rem)]">
+      <header className="glass-header sticky top-0 z-40 w-full border-b border-[var(--border)] shadow-[var(--shadow-soft)]">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <div className="order-3 flex items-center gap-3">
             <div className="hidden lg:block">
@@ -243,7 +243,7 @@ export function Navigation() {
         </div>
 
         {menuOpen ? (
-          <div className="max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-b-[var(--radius-card)] border-t border-[var(--border)] bg-[var(--surface)] px-4 py-5 lg:hidden">
+          <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-[var(--border)] bg-[var(--surface)] px-4 py-5 lg:hidden">
             <div className="mx-auto flex max-w-7xl flex-col gap-2 text-right">
               <Link href="/contact" className="primary-button mb-2 w-full">
                 احجز جلستك

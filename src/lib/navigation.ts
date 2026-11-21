@@ -61,7 +61,7 @@ export const spaceLinks: NavigationLink[] = [
 
 export const navigationGroups: NavigationGroup[] = [
   { label: "الرئيسية", href: "/" },
-  { label: "عن المؤسس", href: "/author" },
+  { label: "عني", href: "/author" },
   {
     label: "فضاءات",
     items: spaceLinks,
