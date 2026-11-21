@@ -19,9 +19,11 @@ export async function generateMetadata(): Promise<Metadata> {
     notFound()
   }
 
+  const description = author.shortBio.replace(/\s+/g, " ").trim() || author.description
+
   return buildMetadata({
     title: `${author.name} ${author.title ? `- ${author.title}` : ""}`,
-    description: author.description,
+    description,
     keywords: ["عن المؤسس", "السيرة الذاتية", "د. هبة اللكاوي"],
     path: "/author",
     image: author?.image
